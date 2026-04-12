@@ -5,6 +5,7 @@ Actualizacion: El polimorifsmo es espectacular. No entendia como usar una funcio
 """
 
 import random
+from ..engine.ataque import Ataque
 
 class Personaje:
     def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico):

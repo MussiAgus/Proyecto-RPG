@@ -5,7 +5,7 @@ Actualizacion: El polimorifsmo es espectacular. No entendia como usar una funcio
 """
 
 import random
-from ..engine.ataque import Ataque
+from engine.ataque import Ataque
 
 class Personaje:
     def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico):
@@ -21,6 +21,7 @@ class Personaje:
         self.magia=magia
         self.magia_restante=magia
         self.ataque_magico=ataque_magico
+        self.efectos_activos=[]
         self.experiencia_necesaria = 10
         self.experiencia_actual = 0
         self.experiencia_otorgada = 0
@@ -62,35 +63,39 @@ class Personaje:
     
     def recibir_danio(self, ataque):
 
-        if(self.esta_defendiendo): 
-            ataque["valor"]= ataque["valor"] // 2
+        danio = ataque.danio_base
+
+        if (self.esta_defendiendo): 
+            danio = danio // 2
             self.esta_defendiendo = False
 
-        if ataque["tipo"]=="Magico":
-            if ataque["valor"]>self.defensa_magica:
-                self.vida_restante-=ataque["valor"]-self.defensa_magica
+        if (ataque.tipo == "Magico"):
+            if (danio > self.defensa_magica):
+                self.vida_restante -= danio - self.defensa_magica
             else:
                 self.mensaje_defensa_magica()
         else: 
-            if ataque["valor"]>self.defensa:
-                self.vida_restante-=ataque["valor"]-self.defensa
+            if (danio > self.defensa):
+                self.vida_restante -= danio - self.defensa
             else:
                 self.mensaje_defensa_fisica()
-        
+
         print(f"\nVida restante de {self.nombre} : {self.vida_restante if self.vida_restante>0 else 0}")
-        if(self.vida_restante<=0): self.muerte()
+        if (self.vida_restante<= 0): self.muerte()
+
     
-    def generador_ataque(self, tipo, tipo_danio):
-        
+    def generador_ataque(self, tipo, valor_base):
         self.esta_defendiendo = False
-        return {
-            "tipo": tipo,
-            "valor": int(tipo_danio + tipo_danio * random.random())
-        }
+        danio = int(valor_base + valor_base * random.random())
+        return Ataque(tipo, danio)
+
 
     def defenderse(self):
         self.mensaje_defenderse()
         self.esta_defendiendo = True
+
+    def procesar_efectos(self):
+        pass
 
     def muerte(self):
         self.mensaje_muerte()

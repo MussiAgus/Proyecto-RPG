@@ -27,13 +27,13 @@ class Strider(Personaje):
         return (10, 2, 2, 4, 0, 6, 0)
 
     def mensaje_defenderse(self):
-        print("Glifo de proteccion!")
+        print("Uy, eso si parece peligroso.")
 
     def mensaje_defensa_magica(self):
-        print(f"Me insulta que intentes usar eso contra mi...")
+        print(f'No no! Es "Leviosaa".')
     
     def mensaje_defensa_fisica(self):
-        print(f"Ja! Los abdominales ya estan haciendo efecto.")
+        print(f"Enserio? He recibido golpes de calor mas fuertes...")
     
     def mensaje_muerte(self):
-        print(f"Ah! Al menos el nombre de {self.nombre} no sera olcidado...")
+        print(f"Guardenme un poco de hidromiel, si? En un rato voy...")

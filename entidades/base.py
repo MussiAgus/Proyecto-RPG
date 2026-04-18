@@ -1,8 +1,3 @@
-"""
-En este, lo que hice fue jugar con los tipos de clases (padres, hijos), de manera que pueda optimizar un poco de codigo.
-También intentaré investigar como es el tema del polimorfismo, y como puede ayudarme a mejorar las clases.
-Actualizacion: El polimorifsmo es espectacular. No entendia como usar una funcion para todos en la clase padre, pero sin perder los mensajes. Pero con esto se soluciona todo.
-"""
 
 import random
 from engine.ataque import Ataque
@@ -95,9 +90,13 @@ class Personaje:
         self.esta_defendiendo = True
 
     def procesar_efectos(self):
-        pass
+        for efecto in self.efectos_activos[:]:
+            efecto.aplicar(self)
+            if efecto.duracion <= 0:
+                self.efectos_activos.remove(efecto)
 
     def muerte(self):
+        self.vida_restante=0
         self.mensaje_muerte()
         self.experiencia_otorgada = self.nivel* random.randint(2,4)
 

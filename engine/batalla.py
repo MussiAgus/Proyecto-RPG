@@ -21,6 +21,9 @@ class Batalla:
                 atacante = segundo
                 defensor = primero
             
+            atacante.procesar_efectos()
+            if(atacante.vida_restante<=0): break
+
             if(atacante.es_jugador):
                 print(f"\n{atacante.nombre}! Ahora! Es tu turno de atacar... \n")
                 print(f"Te quedan {atacante.vida_restante} PV, y al otro {defensor.vida_restante}\n")
@@ -41,15 +44,23 @@ class Batalla:
         ganador.recibir_xp(perdedor.experiencia_otorgada)
 
     def accion_random(self, atacante, defensor):
-        print(f"{atacante.nombre} lanza un ataque feroz!")
+        print(f"{atacante.nombre} te esta atacando!")
         defensor.recibir_danio(atacante.ataque_basico())
 
     def elegir_accion(self, atacante, defensor):
-        opcion = input("\n\n Presione 1 para atacar, y 2 para defender : ")
+        opcion = input("\n\n Presione 1 para atacar, 2 para defender y 3 para usar habilidades: ")
+        if opcion not in ["1", "2","3"]:
+            print("Opción inválida")
+            return self.elegir_accion(atacante, defensor)
         if(opcion == "1"):
             defensor.recibir_danio(atacante.ataque_basico())
-        else:
+        elif(opcion=="2"):
             atacante.defenderse()
+        else:
+            atacante.mostrar_habilidades()
+            indice_habilidad=int(input("\n Presione el numero correspondiente a la habilidad: "))
+            habilidad=atacante.habilidades[indice_habilidad]
+            habilidad.usar(atacante, defensor)
 
     def elegir_orden(self):
         if(self.pj_1.agilidad >= self.pj_2.agilidad):

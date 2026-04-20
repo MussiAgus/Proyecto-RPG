@@ -14,23 +14,23 @@ class Berserker(Personaje):
             magia=0
             )
 
-    def ataque_basico(self):
+    def ataque_basico(self) -> None:
         return self.generador_ataque("Fisico", self.ataque)
 
     def mostrar_especiales(self):
         pass
     
-    def aumentos_especificos(self):
+    def aumentos_especificos(self) -> tuple:
         return (15,4,1,5,0,1,0)
 
-    def mensaje_defenderse(self):
+    def mensaje_defenderse(self) -> None:
         print("Flexion de musculos! AHHH!")
 
-    def mensaje_defensa_magica(self):
+    def mensaje_defensa_magica(self) -> None:
         print(f"Ja! {self.nombre} ser mas fuerte que tus trucos de feria!")
     
-    def mensaje_defensa_fisica(self):
+    def mensaje_defensa_fisica(self) -> None:
         print(f"Mis musculos ser mas fuertes que eso...")
     
-    def mensaje_muerte(self):
+    def mensaje_muerte(self) -> None:
         print(f"Pero {self.nombre} todavia poder...pelear...")

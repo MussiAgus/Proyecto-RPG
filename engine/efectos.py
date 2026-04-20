@@ -1,3 +1,4 @@
+from entidades.base import Personaje
 
 class Efecto:
     def __init__(self, nombre, duracion):
@@ -11,7 +12,7 @@ class Quemado(Efecto):
     def __init__(self):
         super().__init__("Quemado", 2)
 
-    def aplicar(self, personaje):
+    def aplicar(self, personaje: Personaje) ->None:
         danio = 10
         personaje.vida_restante -= danio
         print(f"{personaje.nombre} sufre {danio} de daño por quemadura!")

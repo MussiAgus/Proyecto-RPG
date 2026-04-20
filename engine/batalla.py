@@ -1,7 +1,8 @@
+from  entidades.base import Personaje
 import os
 
 class Batalla:
-    def __init__(self, personaje_1, personaje_2):
+    def __init__(self, personaje_1: Personaje , personaje_2: Personaje):
         self.pj_1 = personaje_1
         self.pj_2 = personaje_2
         self.turno = 0
@@ -40,14 +41,14 @@ class Batalla:
         if(self.pj_1.vida_restante<=0): self.repartir_xp(self.pj_2, self.pj_1)
         else: self.repartir_xp(self.pj_1, self.pj_2)
 
-    def repartir_xp(self, ganador, perdedor):
+    def repartir_xp(self, ganador: Personaje, perdedor: Personaje) -> None:
         ganador.recibir_xp(perdedor.experiencia_otorgada)
 
-    def accion_random(self, atacante, defensor):
+    def accion_random(self, atacante: Personaje, defensor: Personaje) -> None:
         print(f"{atacante.nombre} te esta atacando!")
         defensor.recibir_danio(atacante.ataque_basico())
 
-    def elegir_accion(self, atacante, defensor):
+    def elegir_accion(self, atacante: Personaje, defensor: Personaje) -> None:
         opcion = input("\n\n Presione 1 para atacar, 2 para defender y 3 para usar habilidades: ")
         if opcion not in ["1", "2","3"]:
             print("Opción inválida")
@@ -62,7 +63,7 @@ class Batalla:
             habilidad=atacante.habilidades[indice_habilidad]
             habilidad.usar(atacante, defensor)
 
-    def elegir_orden(self):
+    def elegir_orden(self) -> tuple[Personaje,Personaje]:
         if(self.pj_1.agilidad >= self.pj_2.agilidad):
             print(f"\n{self.pj_1.nombre} es mas agil! Empieza primero.\n")
             return self.pj_1, self.pj_2
@@ -70,6 +71,6 @@ class Batalla:
             print(f"\n{self.pj_2.nombre} es mas agil! Empieza primero.\n")
             return self.pj_2, self.pj_1 
 
-    def pausa_y_limpia(self):
+    def pausa_y_limpia(self) -> None:
         input("\nPresioná Enter para continuar...")
         os.system('cls' if os.name == 'nt' else 'clear')

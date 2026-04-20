@@ -23,7 +23,7 @@ class Personaje:
         self.esta_defendiendo = False
         self.es_jugador = False
 
-    def subir_nivel(self, niveles):
+    def subir_nivel(self, niveles: int) -> None:
         puntos_vida, puntos_defensa, puntos_defensa_magica, puntos_ataque, puntos_ataque_magico, puntos_agilidad, puntos_magia = self.aumentos_especificos()
         for indice in range(niveles):
             self.nivel+=1
@@ -39,12 +39,12 @@ class Personaje:
         self.vida_restante=self.vida
         print(f"{self.nombre} subio {niveles} niveles!")
 
-    def mostrar_estadisticas(self):
+    def mostrar_estadisticas(self) -> None:
         print(f"\nClase: {self.clase}   Nombre: {self.nombre}   Nivel: {self.nivel}\n")
         print(f"Vida_Max: {self.vida}   Defensa: {self.defensa}   Defensa Magica: {self.defensa_magica}\n")
         print(f"Ataque: {self.ataque}   Agilidad: {self.agilidad}   Magia: {self.magia}   Ataque Magico:{self.ataque_magico}\n")
     
-    def recibir_xp(self, experiencia):
+    def recibir_xp(self, experiencia: int) -> None:
         
         self.experiencia_actual+=experiencia
         niveles_agregados=0
@@ -56,7 +56,7 @@ class Personaje:
         
         if niveles_agregados>0: self.subir_nivel(niveles_agregados)
     
-    def recibir_danio(self, ataque):
+    def recibir_danio(self, ataque: int) -> None:
 
         danio = ataque.danio_base
 
@@ -79,23 +79,23 @@ class Personaje:
         if (self.vida_restante<= 0): self.muerte()
 
     
-    def generador_ataque(self, tipo, valor_base):
+    def generador_ataque(self, tipo: str, valor_base: int) -> Ataque:
         self.esta_defendiendo = False
         danio = int(valor_base + valor_base * random.random())
         return Ataque(tipo, danio)
 
 
-    def defenderse(self):
+    def defenderse(self) -> None:
         self.mensaje_defenderse()
         self.esta_defendiendo = True
 
-    def procesar_efectos(self):
+    def procesar_efectos(self) -> None:
         for efecto in self.efectos_activos[:]:
             efecto.aplicar(self)
             if efecto.duracion <= 0:
                 self.efectos_activos.remove(efecto)
 
-    def muerte(self):
+    def muerte(self) -> None:
         self.vida_restante=0
         self.mensaje_muerte()
         self.experiencia_otorgada = self.nivel* random.randint(2,4)

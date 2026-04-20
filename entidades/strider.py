@@ -15,25 +15,25 @@ class Strider(Personaje):
             magia=0
             )
 
-    def ataque_basico(self):
+    def ataque_basico(self) -> None:
         danio = self.ataque+(self.agilidad//10 * random.randint(0,3))
         return self.generador_ataque("Fisico", danio)
 
     def mostrar_especiales(self):
         pass
 
-    def aumentos_especificos(self):
+    def aumentos_especificos(self) -> tuple:
     # (vida, def, def_mag, ataque, ataque_mag, agi, mag)
         return (10, 2, 2, 4, 0, 6, 0)
 
-    def mensaje_defenderse(self):
+    def mensaje_defenderse(self) -> None:
         print("Uy, eso si parece peligroso.")
 
-    def mensaje_defensa_magica(self):
+    def mensaje_defensa_magica(self) -> None:
         print(f'No no! Es "Leviosaa".')
     
-    def mensaje_defensa_fisica(self):
+    def mensaje_defensa_fisica(self) -> None:
         print(f"Enserio? He recibido golpes de calor mas fuertes...")
     
-    def mensaje_muerte(self):
+    def mensaje_muerte(self) -> None:
         print(f"Guardenme un poco de hidromiel, si? En un rato voy...")

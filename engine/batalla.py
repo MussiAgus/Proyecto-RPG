@@ -49,19 +49,32 @@ class Batalla:
         defensor.recibir_danio(atacante.ataque_basico())
 
     def elegir_accion(self, atacante: Personaje, defensor: Personaje) -> None:
-        opcion = input("\n\n Presione 1 para atacar, 2 para defender y 3 para usar habilidades: ")
-        if opcion not in ["1", "2","3"]:
-            print("Opción inválida")
-            return self.elegir_accion(atacante, defensor)
-        if(opcion == "1"):
-            defensor.recibir_danio(atacante.ataque_basico())
-        elif(opcion=="2"):
-            atacante.defenderse()
-        else:
-            atacante.mostrar_habilidades()
-            indice_habilidad=int(input("\n Presione el numero correspondiente a la habilidad: "))
-            habilidad=atacante.habilidades[indice_habilidad]
-            habilidad.usar(atacante, defensor)
+        while True:
+            opcion = input("\n\n Presione 1 para atacar, 2 para defender y 3 para usar habilidades: ")
+
+            if opcion == "1":
+                defensor.recibir_danio(atacante.ataque_basico())
+                break
+
+            elif opcion == "2":
+                atacante.defenderse()
+                break
+
+            elif opcion == "3":
+                atacante.mostrar_habilidades()
+                indice_habilidad = int(input("\nIngrese el numero de la habilidad: "))
+                if indice_habilidad >=0 and indice_habilidad <= len(atacante.habilidades):
+                    habilidad = atacante.habilidades[indice_habilidad]
+                    habilidad.usar(atacante,defensor)
+                    break
+                else:
+                    print("\nLa opcion elegida no existe en el rango de habilidades\n")
+                    self.pausa_y_limpia()
+                    continue
+            else:
+                print("\nOpcion incorrecta.\n")
+                self.pausa_y_limpia()
+                continue
 
     def elegir_orden(self) -> tuple[Personaje,Personaje]:
         if(self.pj_1.agilidad >= self.pj_2.agilidad):

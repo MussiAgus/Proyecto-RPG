@@ -17,6 +17,7 @@ class Personaje:
         self.magia_restante=magia
         self.ataque_magico=ataque_magico
         self.efectos_activos=[]
+        self.habilidades=[]
         self.experiencia_necesaria = 10
         self.experiencia_actual = 0
         self.experiencia_otorgada = 0
@@ -77,13 +78,15 @@ class Personaje:
 
         print(f"\nVida restante de {self.nombre} : {self.vida_restante if self.vida_restante>0 else 0}")
         if (self.vida_restante<= 0): self.muerte()
-
     
     def generador_ataque(self, tipo: str, valor_base: int) -> Ataque:
         self.esta_defendiendo = False
         danio = int(valor_base + valor_base * random.random())
         return Ataque(tipo, danio)
 
+    def mostrar_habilidades(self) -> None:
+        for i, habilidad in enumerate(self.habilidades):
+            print(f"{i} : {habilidad.nombre}")
 
     def defenderse(self) -> None:
         self.mensaje_defenderse()

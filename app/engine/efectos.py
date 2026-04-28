@@ -1,4 +1,4 @@
-from entidades.base import Personaje
+from app.entidades.base import Personaje
 
 class Efecto:
     def __init__(self, nombre, duracion):

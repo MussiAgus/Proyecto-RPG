@@ -1,5 +1,5 @@
-from engine.efectos import Quemado
-from entidades.base import Personaje
+from app.engine.efectos import Quemado
+from app.entidades.base import Personaje
 
 class Habilidad:
     def __init__(self, nombre, tipo, potencia, costo_magia):
@@ -20,7 +20,6 @@ class BolaDeFuego(Habilidad):
             potencia=40,
             costo_magia=50
         )
-
 
     def usar(self, atacante: Personaje, defensor: Personaje) -> None:
         ataque = atacante.generador_ataque("Magico", self.potencia)

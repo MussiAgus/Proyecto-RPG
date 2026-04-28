@@ -1,4 +1,4 @@
-from  entidades.base import Personaje
+from  app.entidades.base import Personaje
 import os
 
 class Batalla:

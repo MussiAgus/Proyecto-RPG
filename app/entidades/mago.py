@@ -1,5 +1,5 @@
-from entidades.base import Personaje
-from engine.habilidad import BolaDeFuego
+from app.entidades.base import Personaje
+from app.engine.habilidad import BolaDeFuego
 
 class Mago(Personaje):
     def __init__(self, nombre):

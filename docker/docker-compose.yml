@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: rpg_mysql_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: rpg_db        # Nombre de tu base de datos
+      MYSQL_ROOT_PASSWORD: root     # Contraseña del superusuario
+      MYSQL_USER: usuario_rpg       # Usuario para tu aplicación
+      MYSQL_PASSWORD: proyecto_rpg  # Contraseña del usuario
+    ports:
+      - "3306:3306"                 # MySQL usa el puerto 3306 por defecto 
+    volumes:
+      # Mapea tu archivo local a la carpeta especial de Docker
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      
+      # 2. Volumen de persistencia (Memory Card) [cite: 1137, 1138]
+      # Para que no pierdas tus personajes al borrar el contenedor
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

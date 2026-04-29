@@ -5,7 +5,7 @@ from app.bd.bd_manager import  DBManager
 
 def test_db():
     db = DBManager()
-    """
+
     # 1. Creamos los personajes (instancias de tus clases)
     conan = Berserker(nombre="Conan")
     gandalf = Mago(nombre="Gandalf")
@@ -16,7 +16,7 @@ def test_db():
     db.guardar_personaje(conan)
     db.guardar_personaje(gandalf)
     db.guardar_personaje(legolas)
-    """
+
     # 3. Probamos la carga
     print("\n--- Consultando la base de datos ---")
     db.cargar_personaje("Conan")

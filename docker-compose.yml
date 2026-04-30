@@ -12,7 +12,7 @@ services:
       - "3306:3306"                 # MySQL usa el puerto 3306 por defecto 
     volumes:
       # Mapea tu archivo local a la carpeta especial de Docker
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./app/bd/init.sql:/docker-entrypoint-initdb.d/init.sql
       
       # 2. Volumen de persistencia (Memory Card) [cite: 1137, 1138]
       # Para que no pierdas tus personajes al borrar el contenedor

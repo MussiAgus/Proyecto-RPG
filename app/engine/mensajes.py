@@ -1,8 +1,4 @@
-# filepath: app/engine/mensajes.py
-"""Módulo para manejar mensajes de presentación de los personajes."""
-
 from abc import ABC, abstractmethod
-
 
 class Mensajero(ABC):
     """Clase base abstracta para mensajes de personajes."""
@@ -25,7 +21,6 @@ class Mensajero(ABC):
 
 
 class MensajeroGuerrero(Mensajero):
-    """Mensajes típicos de un guerrero/berserker."""
     
     def mensaje_defenderse(self) -> str:
         return "Flexion de musculos! AHHH!"
@@ -41,7 +36,6 @@ class MensajeroGuerrero(Mensajero):
 
 
 class MensajeroMago(Mensajero):
-    """Mensajes típicos de un mago."""
     
     def mensaje_defenderse(self) -> str:
         return "Glifo de proteccion!"
@@ -57,16 +51,15 @@ class MensajeroMago(Mensajero):
 
 
 class MensajeroStrider(Mensajero):
-    """Mensajes típicos de un strider/rogue."""
     
     def mensaje_defenderse(self) -> str:
-        return "¡Movimiento fluido!"
+        return "Dale, a ver si lo siento."
     
     def mensaje_defensa_magica(self) -> str:
-        return "¡Eso no me afecta!"
+        return "Seguro que no te equivocaste al pronunciarlo...?"
     
     def mensaje_defensa_fisica(self) -> str:
-        return "¡Demasiado lento!"
+        return "Demasiado lento!"
     
     def mensaje_muerte(self) -> str:
-        return "¡Volveré en las sombras...!"
+        return "Fue divertido..."

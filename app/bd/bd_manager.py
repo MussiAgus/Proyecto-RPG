@@ -5,10 +5,10 @@ import time
 class DBManager:
     def __init__(self):
         self.config = {
-            'host': 'db',          # Al estar en Docker pero mapear puertos, usas localhost
-            'user': 'usuario_rpg',        
-            'password': 'proyecto_rpg',   
-            'database': 'rpg_db'          
+            'host': 'db',
+            'user': 'usuario_rpg',
+            'password': 'proyecto_rpg',
+            'database': 'rpg_db'
         }
 
     def conectar(self):
@@ -18,7 +18,7 @@ class DBManager:
             try:
                 conexion = mysql.connector.connect(**self.config)
                 if conexion.is_connected():
-                    #print("¡Conexión exitosa a la base de datos!")
+                    #print("conectado a la bd")
                     return conexion
             except Error as e:
                 print(f"Base de datos no lista (quedan {intentos} intentos)...")

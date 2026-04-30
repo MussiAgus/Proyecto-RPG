@@ -18,6 +18,7 @@ De todas formas, ya hay una versión base del juego, por lo que se puede hacer u
 
 ## Cosas en proceso:
  - Implementación de base de datos, para poder guardar y cargar personajes ya creados.
+ - Terminar de unir el sistema con docker.
  - Mejorar el proceso de las batallas, para poder terminar una, y comenzar otra.
  - Creación de más habilidades específicas por clase.
  - Creación de más efectos, acorde a las diferentes habilidades creadas. 

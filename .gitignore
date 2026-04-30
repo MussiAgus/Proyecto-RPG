@@ -1,3 +1,7 @@
 venv
 .env
 /venv
+__pycache__/
+*.pyc
+Diagrama de clases actuales.drawio
+pruebasDB.py

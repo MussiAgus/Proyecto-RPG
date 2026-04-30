@@ -1,28 +1,75 @@
 
 import random
 from app.engine.ataque import Ataque
+from app.engine.mensajes import Mensajero
 
 class Personaje:
-    def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico):
+    def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, mensajero=None):
         self.nombre=nombre
         self.clase=clase
         self.nivel=1
-        self.vida=vida
-        self.vida_restante=self.vida
-        self.defensa=defensa
-        self.defensa_magica= defensa_magica
-        self.ataque=ataque
-        self.agilidad=agilidad
-        self.magia=magia
-        self.magia_restante=magia
-        self.ataque_magico=ataque_magico
+        self._vida=vida
+        self._vida_restante=self._vida
+        self._defensa=defensa
+        self._defensa_magica= defensa_magica
+        self._ataque=ataque
+        self._agilidad=agilidad
+        self._magia=magia
+        self._magia_restante=magia
+        self._ataque_magico=ataque_magico
         self.efectos_activos=[]
         self.habilidades=[]
         self.experiencia_necesaria = 10
         self.experiencia_actual = 0
         self.experiencia_otorgada = 0
+        self.mensajero = mensajero
         self.esta_defendiendo = False
         self.es_jugador = False
+    
+    # Properties para encapsulamiento
+    @property
+    def vida(self) -> int:
+        return self._vida
+    
+    @property
+    def vida_restante(self) -> int:
+        return self._vida_restante
+    
+    @vida_restante.setter
+    def vida_restante(self, valor: int) -> None:
+        self._vida_restante = max(0, min(valor, self._vida))
+    
+    @property
+    def defensa(self) -> int:
+        return self._defensa
+    
+    @property
+    def defensa_magica(self) -> int:
+        return self._defensa_magica
+    
+    @property
+    def ataque(self) -> int:
+        return self._ataque
+    
+    @property
+    def agilidad(self) -> int:
+        return self._agilidad
+    
+    @property
+    def magia(self) -> int:
+        return self._magia
+    
+    @property
+    def magia_restante(self) -> int:
+        return self._magia_restante
+    
+    @magia_restante.setter
+    def magia_restante(self, valor: int) -> None:
+        self._magia_restante = max(0, min(valor, self._magia))
+    
+    @property
+    def ataque_magico(self) -> int:
+        return self._ataque_magico
 
     def subir_nivel(self, niveles: int) -> None:
         puntos_vida, puntos_defensa, puntos_defensa_magica, puntos_ataque, puntos_ataque_magico, puntos_agilidad, puntos_magia = self.aumentos_especificos()
@@ -69,12 +116,12 @@ class Personaje:
             if (danio > self.defensa_magica):
                 self.vida_restante -= danio - self.defensa_magica
             else:
-                self.mensaje_defensa_magica()
+                print(f"{self.mensajero.mensaje_defensa_magica()}")
         else: 
             if (danio > self.defensa):
                 self.vida_restante -= danio - self.defensa
             else:
-                self.mensaje_defensa_fisica()
+                print(f"{self.mensajero.mensaje_defensa_fisica()}")
 
         print(f"\nVida restante de {self.nombre} : {self.vida_restante if self.vida_restante>0 else 0}")
         if (self.vida_restante<= 0): self.muerte()
@@ -89,7 +136,7 @@ class Personaje:
             print(f"{i} : {habilidad.nombre}")
 
     def defenderse(self) -> None:
-        self.mensaje_defenderse()
+        print(f"{self.mensajero.mensaje_defenderse()}")
         self.esta_defendiendo = True
 
     def procesar_efectos(self) -> None:
@@ -100,7 +147,7 @@ class Personaje:
 
     def muerte(self) -> None:
         self.vida_restante=0
-        self.mensaje_muerte()
+        print(f"{self.mensajero.mensaje_muerte()}")
         self.experiencia_otorgada = self.nivel* random.randint(2,4)
 
 

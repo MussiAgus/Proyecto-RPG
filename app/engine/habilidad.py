@@ -22,6 +22,13 @@ class BolaDeFuego(Habilidad):
         )
 
     def usar(self, atacante: Personaje, defensor: Personaje) -> None:
-        ataque = atacante.generador_ataque("Magico", self.potencia)
+        if atacante.magia_restante < self.costo_magia:
+            print(f"¡No tienes suficiente magia! Necesitas {self.costo_magia}, tienes {atacante.magia_restante}")
+            return
+        
+        atacante.magia_restante -= self.costo_magia
+        print(f"¡{atacante.nombre} usa {self.nombre}! (Magia restante: {atacante.magia_restante})")
+        
+        ataque = atacante.generador_ataque(self.tipo, self.potencia)
         defensor.recibir_danio(ataque)
         defensor.efectos_activos.append(Quemado())

@@ -46,7 +46,9 @@ class Batalla:
 
     def accion_random(self, atacante: Personaje, defensor: Personaje) -> None:
         print(f"{atacante.nombre} te esta atacando!")
-        defensor.recibir_danio(atacante.ataque_basico())
+        danio = atacante.ataque_basico()
+        if danio:
+            defensor.recibir_danio(danio)
 
     def elegir_accion(self, atacante: Personaje, defensor: Personaje) -> None:
         while True:
@@ -61,9 +63,20 @@ class Batalla:
                 break
 
             elif opcion == "3":
+                if not atacante.habilidades:
+                    print("\nNo tienes habilidades disponibles.\n")
+                    self.pausa_y_limpia()
+                    continue
+                
                 atacante.mostrar_habilidades()
-                indice_habilidad = int(input("\nIngrese el numero de la habilidad: "))
-                if indice_habilidad >=0 and indice_habilidad <= len(atacante.habilidades):
+                try:
+                    indice_habilidad = int(input("\nIngrese el numero de la habilidad: "))
+                except ValueError:
+                    print("\nEntrada inválida. Debe ser un número.\n")
+                    self.pausa_y_limpia()
+                    continue
+                    
+                if indice_habilidad >=0 and indice_habilidad < len(atacante.habilidades):
                     habilidad = atacante.habilidades[indice_habilidad]
                     habilidad.usar(atacante,defensor)
                     break

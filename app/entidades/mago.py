@@ -1,5 +1,6 @@
 from app.entidades.base import Personaje
 from app.engine.habilidad import BolaDeFuego
+from app.engine.mensajes import MensajeroMago
 
 class Mago(Personaje):
     def __init__(self, nombre):
@@ -13,6 +14,7 @@ class Mago(Personaje):
             defensa_magica= 25,
             ataque_magico=40,
             magia=100,
+            mensajero=MensajeroMago()
             )
         self.habilidades.append(BolaDeFuego())
 
@@ -26,14 +28,9 @@ class Mago(Personaje):
     def aumentos_especificos(self) -> tuple:
         return (5,1,4,1,4,1,6)
 
-    def mensaje_defenderse(self) -> None:
-        print("Glifo de proteccion!")
-
-    def mensaje_defensa_magica(self) -> None:
-        print(f"Me insulta que intentes usar eso contra mi...")
-    
-    def mensaje_defensa_fisica(self) -> None:
-        print(f"Ja! Los abdominales ya estan haciendo efecto.")
-    
-    def mensaje_muerte(self) -> None:
-        print(f"Ah! Al menos el nombre de {self.nombre} no sera olcidado...")
+    def ataque_basico(self) -> None:
+        if(self.magia_restante>=20):
+            self.magia_restante-=20
+            return self.generador_ataque("Magico", self.ataque_magico) 
+        else:
+            return self.generador_ataque("Fisico", self.ataque)

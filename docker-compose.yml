@@ -4,9 +4,9 @@ services:
     container_name: rpg_mysql_db
     restart: always
     environment:
-      MYSQL_DATABASE: rpg_db        # Nombre de tu base de datos
+      MYSQL_DATABASE: rpg_db        # Nombre de la base de datos
       MYSQL_ROOT_PASSWORD: root     # Contraseña del superusuario
-      MYSQL_USER: usuario_rpg       # Usuario para tu aplicación
+      MYSQL_USER: usuario_rpg       # Usuario para la aplicación
       MYSQL_PASSWORD: proyecto_rpg  # Contraseña del usuario
     ports:
       - "3306:3306"                 # MySQL usa el puerto 3306 por defecto 

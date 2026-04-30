@@ -26,7 +26,6 @@ class Personaje:
         self.esta_defendiendo = False
         self.es_jugador = False
     
-    # Properties para encapsulamiento
     @property
     def vida(self) -> int:
         return self._vida
@@ -75,16 +74,16 @@ class Personaje:
         puntos_vida, puntos_defensa, puntos_defensa_magica, puntos_ataque, puntos_ataque_magico, puntos_agilidad, puntos_magia = self.aumentos_especificos()
         for indice in range(niveles):
             self.nivel+=1
-            self.vida += (puntos_vida + random.randint(1, 3))
-            self.defensa +=(puntos_defensa + random.randint(0, 2))
-            self.defensa_magica+= (puntos_defensa_magica + random.randint(0, 2))
-            self.ataque += (puntos_ataque + random.randint(0, 2))
-            self.ataque_magico+=(puntos_ataque_magico + random.randint(0, 3))
-            self.agilidad+= (puntos_agilidad + random.randint(1,2))
-            self.magia+= (puntos_magia + random.randint(1,4))
+            self._vida += (puntos_vida + random.randint(1, 3))
+            self._defensa +=(puntos_defensa + random.randint(0, 2))
+            self._defensa_magica+= (puntos_defensa_magica + random.randint(0, 2))
+            self._ataque += (puntos_ataque + random.randint(0, 2))
+            self._ataque_magico+=(puntos_ataque_magico + random.randint(0, 3))
+            self._agilidad+= (puntos_agilidad + random.randint(1,2))
+            self._magia+= (puntos_magia + random.randint(1,4))
         
-        self.magia_restante=self.magia
-        self.vida_restante=self.vida
+        self.magia_restante=self._magia
+        self.vida_restante=self._vida
         print(f"{self.nombre} subio {niveles} niveles!")
 
     def mostrar_estadisticas(self) -> None:

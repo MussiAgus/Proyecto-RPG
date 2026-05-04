@@ -63,7 +63,7 @@ class DBManager:
         if not conexion:
             print("Error al acceder a la base de datos.")
             return
-        
+        cursor = None
         try:
             cursor = conexion.cursor()
             query = "SELECT nombre, clase, nivel FROM personaje"
@@ -71,19 +71,24 @@ class DBManager:
             personajes = cursor.fetchall()
             if personajes:
                 for personaje in personajes:
-                    print(f"Nombre {personaje[0]} -- Clase {personaje[1]} -- nivel {personaje[2]}\n")
+                    nombre, clase, nivel = personaje
+                    print(f"Nombre {nombre} -- Clase {clase} -- nivel {nivel}\n")
             else:
                 print("No hay personajes en la BD.")
         except Error as e:
             print(f"Error al leer personajes:{e}")
         finally:
-            if conexion.is_connected():
+            if cursor is not None:
                 cursor.close()
+            if conexion.is_connected():
                 conexion.close()
 
     def cargar_personaje(self, nombre):
         conexion=self.conectar()
-        cursor = conexion.cursor()
+        if conexion is not None:
+            cursor = conexion.cursor()
+        else:
+            print("No se conecto a la base de datos")
 
         query = "SELECT nombre, clase, nivel FROM personaje WHERE nombre= %s"
         cursor.execute(query, (nombre, ))

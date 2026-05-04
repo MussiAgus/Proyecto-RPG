@@ -16,7 +16,7 @@ class Berserker(Personaje):
             mensajero=MensajeroGuerrero()
             )
 
-    def ataque_basico(self) -> None:
+    def ataque_basico(self):
         return self.generador_ataque("Fisico", self.ataque)
 
     def mostrar_especiales(self):
@@ -24,6 +24,3 @@ class Berserker(Personaje):
     
     def aumentos_especificos(self) -> tuple:
         return (15,4,1,5,0,1,0)
-
-    def ataque_basico(self) -> None:
-        return self.generador_ataque("Fisico", self.ataque)

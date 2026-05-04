@@ -19,6 +19,18 @@ class Mensajero(ABC):
     def mensaje_muerte(self) -> str:
         pass
 
+class MensajeroVacio (Mensajero):
+    def mensaje_defenderse(self) -> str:
+        return "Defensa!"
+    
+    def mensaje_defensa_magica(self) -> str:
+        return "Defensa magica!"
+    
+    def mensaje_defensa_fisica(self) -> str:
+        return "Defensaje fisica!"
+    
+    def mensaje_muerte(self) -> str:
+        return "Ya no puede pelear mas..."
 
 class MensajeroGuerrero(Mensajero):
     

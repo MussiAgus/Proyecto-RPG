@@ -1,7 +1,8 @@
 
 import random
 from app.engine.ataque import Ataque
-from app.engine.mensajes import Mensajero
+from app.engine.mensajes import Mensajero, MensajeroVacio
+from abc import ABC, abstractmethod
 
 class Personaje:
     def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, mensajero=None):
@@ -22,7 +23,7 @@ class Personaje:
         self.experiencia_necesaria = 10
         self.experiencia_actual = 0
         self.experiencia_otorgada = 0
-        self.mensajero = mensajero
+        self.mensajero = mensajero or MensajeroVacio()
         self.esta_defendiendo = False
         self.es_jugador = False
     
@@ -70,6 +71,13 @@ class Personaje:
     def ataque_magico(self) -> int:
         return self._ataque_magico
 
+    @abstractmethod
+    def ataque_basico(self) -> Ataque:
+        pass
+    @abstractmethod
+    def aumentos_especificos(self) -> tuple:
+        pass
+
     def subir_nivel(self, niveles: int) -> None:
         puntos_vida, puntos_defensa, puntos_defensa_magica, puntos_ataque, puntos_ataque_magico, puntos_agilidad, puntos_magia = self.aumentos_especificos()
         for indice in range(niveles):
@@ -103,7 +111,7 @@ class Personaje:
         
         if niveles_agregados>0: self.subir_nivel(niveles_agregados)
     
-    def recibir_danio(self, ataque: int) -> None:
+    def recibir_danio(self, ataque: Ataque) -> None:
 
         danio = ataque.danio_base
 

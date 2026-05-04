@@ -17,7 +17,7 @@ class Strider(Personaje):
             mensajero=MensajeroStrider()
             )
 
-    def ataque_basico(self) -> None:
+    def ataque_basico(self) :
         danio = self.ataque+(self.agilidad//10 * random.randint(0,3))
         return self.generador_ataque("Fisico", danio)
 
@@ -27,7 +27,3 @@ class Strider(Personaje):
     def aumentos_especificos(self) -> tuple:
     # (vida, def, def_mag, ataque, ataque_mag, agi, mag)
         return (10, 2, 2, 4, 0, 6, 0)
-
-    def ataque_basico(self) -> None:
-        danio = self.ataque+(self.agilidad//10 * random.randint(0,3))
-        return self.generador_ataque("Fisico", danio)

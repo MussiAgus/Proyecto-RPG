@@ -18,7 +18,7 @@ class Mago(Personaje):
             )
         self.habilidades.append(BolaDeFuego())
 
-    def ataque_basico(self) -> None:
+    def ataque_basico(self):
         if(self.magia_restante>=20):
             self.magia_restante-=20
             return self.generador_ataque("Magico", self.ataque_magico) 
@@ -27,10 +27,3 @@ class Mago(Personaje):
     
     def aumentos_especificos(self) -> tuple:
         return (5,1,4,1,4,1,6)
-
-    def ataque_basico(self) -> None:
-        if(self.magia_restante>=20):
-            self.magia_restante-=20
-            return self.generador_ataque("Magico", self.ataque_magico) 
-        else:
-            return self.generador_ataque("Fisico", self.ataque)

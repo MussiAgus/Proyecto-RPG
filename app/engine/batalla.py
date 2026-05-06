@@ -7,21 +7,28 @@ class Batalla:
         self.pj_2 = personaje_2
         self.turno = 0
 
+    def elegir_orden(self, primero : Personaje, segundo: Personaje) -> tuple:
+        if(self.turno % 2 == 0):
+            return primero, segundo
+        else:
+            return segundo, primero
+
+    def elegir_inicio(self) -> int:
+        if(self.pj_1.agilidad >= self.pj_2.agilidad):
+            print(f"\n{self.pj_1.nombre} es mas agil! Empieza primero.\n")
+            return 0
+        else:
+            print(f"\n{self.pj_2.nombre} es mas agil! Empieza primero.\n")
+            return 1 
+
     def comienzo(self):
         self.pj_1.es_jugador = True
-        primero, segundo = self.elegir_orden()
-        atacante = primero
-        defensor = segundo
+        self.turno = self.elegir_inicio()
 
-        while(True):
-            
-            if(self.turno % 2 == 0):
-                atacante = primero
-                defensor = segundo
-            else:
-                atacante = segundo
-                defensor = primero
-            
+        while(self.pj_1.vida_restante >0 and self.pj_2.vida_restante>0):
+
+            atacante, defensor = self.elegir_orden(self.pj_1,self.pj_2)
+
             atacante.procesar_efectos()
             if(atacante.vida_restante<=0): break
 
@@ -37,7 +44,6 @@ class Batalla:
             self.turno+=1
         
         print(f"\nBatalla terminada! El ganador es...{self.pj_1.nombre if self.pj_1.vida_restante>0 else self.pj_2.nombre}")
-        
         if(self.pj_1.vida_restante<=0): self.repartir_xp(self.pj_2, self.pj_1)
         else: self.repartir_xp(self.pj_1, self.pj_2)
 
@@ -52,8 +58,7 @@ class Batalla:
 
     def elegir_accion(self, atacante: Personaje, defensor: Personaje) -> None:
         while True:
-            opcion = input("\n\n Presione 1 para atacar, 2 para defender y 3 para usar habilidades: ")
-
+            opcion = input("\n\n1)Atacar\n2)Defender\n3)Habilidades\n4)Acabar pelea\n\nIngrese la accion: ")
             if opcion == "1":
                 defensor.recibir_danio(atacante.ataque_basico())
                 break
@@ -84,18 +89,13 @@ class Batalla:
                     print("\nLa opcion elegida no existe en el rango de habilidades\n")
                     self.pausa_y_limpia()
                     continue
+            elif opcion == "4":
+                atacante.muerte();
+                break
             else:
                 print("\nOpcion incorrecta.\n")
                 self.pausa_y_limpia()
                 continue
-
-    def elegir_orden(self) -> tuple[Personaje,Personaje]:
-        if(self.pj_1.agilidad >= self.pj_2.agilidad):
-            print(f"\n{self.pj_1.nombre} es mas agil! Empieza primero.\n")
-            return self.pj_1, self.pj_2
-        else:
-            print(f"\n{self.pj_2.nombre} es mas agil! Empieza primero.\n")
-            return self.pj_2, self.pj_1 
 
     def pausa_y_limpia(self) -> None:
         input("\nPresioná Enter para continuar...")

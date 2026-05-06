@@ -1,6 +1,6 @@
-from app.entidades.factoryClases import PersonajeFactory
-from app.bd.bd_manager import DBManager
-from app.engine.batalla import Batalla
+from bd.bd_manager import DBManager
+from engine.batalla import Batalla
+from entidades.factoryClases import PersonajeFactory
 
 bd = DBManager()
 jugador = None

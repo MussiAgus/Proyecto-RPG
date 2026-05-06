@@ -27,7 +27,7 @@ services:
     environment:
       - DB_HOST=db  # IMPORTANTE: Dentro de Docker, el host no es 'localhost', es el nombre del servicio 'db'
     volumes:
-      - .:/app # Sincroniza tu código para que los cambios se vean al instante
+      - ./app:/app # Sincroniza tu código para que los cambios se vean al instante
     stdin_open: true # Permite interactuar con la consola (input)
     tty: true        # Permite interactuar con la consola (input)
 

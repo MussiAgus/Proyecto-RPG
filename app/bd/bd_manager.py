@@ -43,13 +43,13 @@ class DBManager:
                 personaje.clase, 
                 personaje.nivel,
                 personaje.experiencia_actual,
-                personaje.vida,
-                personaje.defensa,
-                personaje.ataque,
-                personaje.agilidad,
-                personaje.defensa_magica,
-                personaje.ataque_magico,
-                personaje.magia,
+                personaje._vida,
+                personaje._defensa,
+                personaje._ataque,
+                personaje._agilidad,
+                personaje._defensa_magica,
+                personaje._ataque_magico,
+                personaje._magia,
             )
             
             cursor.execute(query, valores)
@@ -83,15 +83,115 @@ class DBManager:
             if conexion.is_connected():
                 conexion.close()
 
-    def cargar_personaje(self, nombre):
-        conexion=self.conectar()
-        if conexion is not None:
+    def buscar_nombre (self, nombre) -> bool:
+        conexion = self.conectar()
+        if not conexion:
+            print("Error al acceder a la base de datos.")
+            return False
+        cursor = None
+        try:
             cursor = conexion.cursor()
-        else:
-            print("No se conecto a la base de datos")
+            query = "SELECT nombre FROM personaje WHERE nombre = %s"
+            cursor.execute(query,(nombre, ))
+            personaje = cursor.fetchone()
+        except Error as e:
+            print(f"Error al cargar personaje. -> {e}")
+            personaje = None
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if conexion.is_connected():
+                conexion.close()
+        
+        if personaje == None : return False
+        else : return True
 
-        query = "SELECT nombre, clase, nivel FROM personaje WHERE nombre= %s"
-        cursor.execute(query, (nombre, ))
-        resultado = cursor.fetchone()
+    def cargar_personaje(self, nombre :str):
+        conexion=self.conectar()
+        
+        if not conexion:
+            print("No se pudo acceder a la base de datos")
+            return None
+        
+        cursor = None
 
-        print(resultado) #Aca solo era para probar. Despues tendra otra codificacion.
+        try:
+            cursor = conexion.cursor()
+            query = "SELECT nombre, clase, nivel, experiencia, vida_max, defensa, ataque, agilidad, defensa_magica, ataque_magico, magia_max FROM personaje WHERE nombre= %s"
+            cursor.execute(query,(nombre,))
+            resultado = cursor.fetchone()
+            
+        except Error as e:
+            print(f"Error al cargar personaje. -> {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if conexion.is_connected():
+                conexion.close()
+        
+        return resultado
+    
+    def borrar_personaje(self, nombre: str):
+        conexion = self.conectar()
+        if conexion:
+            try:
+                cursor = conexion.cursor()
+                query = "DELETE FROM personaje WHERE nombre = %s"
+                cursor.execute(query, (nombre,))
+                conexion.commit()
+                if cursor.rowcount > 0:
+                    print(f"¡Personaje '{nombre}' eliminado correctamente!")
+                else:
+                    print(f"No se encontró al personaje '{nombre}'.")
+            except Error as e:
+                print(f"Error al intentar borrar: {e}")
+            finally:
+                cursor.close()
+                conexion.close()
+
+    def actualizar_personaje(self, personaje):
+        conexion=self.conectar()
+        if not conexion:
+            print("No se pudo acceder a la base de datos")
+            return None
+        
+        cursor = None
+        try:
+            cursor = conexion.cursor()
+            query = """
+                UPDATE personaje SET
+                    clase = %s,
+                    nivel = %s,
+                    experiencia = %s,
+                    vida_max = %s,
+                    defensa = %s,
+                    ataque = %s,
+                    agilidad = %s,
+                    defensa_magica = %s, 
+                    ataque_magico = %s, 
+                    magia_max = %s
+                WHERE nombre = %s
+            """
+            valores = (
+                personaje.clase,
+                personaje.nivel,
+                personaje.experiencia_actual,
+                personaje.vida,
+                personaje.defensa,
+                personaje.ataque,
+                personaje.agilidad,
+                personaje.defensa_magica,
+                personaje.ataque_magico,     
+                personaje.magia,             
+                personaje.nombre             
+            )
+        
+            cursor.execute(query, valores)
+            conexion.commit()
+        except Error as e:
+            print(f"Error al actualizar: {e}")
+        finally:
+            if cursor is not None:
+                cursor.close()
+            if conexion.is_connected():
+                conexion.close()

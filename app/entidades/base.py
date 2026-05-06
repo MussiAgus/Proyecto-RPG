@@ -1,7 +1,7 @@
 
 import random
 from app.engine.ataque import Ataque
-from app.engine.mensajes import Mensajero, MensajeroVacio
+from app.engine.mensajes import MensajeroClases, MensajeroVacio
 from abc import ABC, abstractmethod
 
 class Personaje:
@@ -92,15 +92,14 @@ class Personaje:
         
         self.magia_restante=self._magia
         self.vida_restante=self._vida
-        print(f"{self.nombre} subio {niveles} niveles!")
+        print(self.mensajero.subida_niveles(self.nombre, niveles))
 
     def mostrar_estadisticas(self) -> None:
-        print(f"\nClase: {self.clase}   Nombre: {self.nombre}   Nivel: {self.nivel}\n")
-        print(f"Vida_Max: {self.vida}   Defensa: {self.defensa}   Defensa Magica: {self.defensa_magica}\n")
-        print(f"Ataque: {self.ataque}   Agilidad: {self.agilidad}   Magia: {self.magia}   Ataque Magico:{self.ataque_magico}\n")
-    
+        print(self.mensajero.formato_estadisticas(self))
+
     def recibir_xp(self, experiencia: int) -> None:
         
+        print(self.mensajero.obtener_xp(self.nombre, experiencia))
         self.experiencia_actual+=experiencia
         niveles_agregados=0
 
@@ -130,7 +129,7 @@ class Personaje:
             else:
                 print(f"{self.mensajero.mensaje_defensa_fisica()}")
 
-        print(f"\nVida restante de {self.nombre} : {self.vida_restante if self.vida_restante>0 else 0}")
+        print(self.mensajero.mostrar_vida_restante(self.nombre, {self.vida_restante if self.vida_restante>0 else 0}))
         if (self.vida_restante<= 0): self.muerte()
     
     def generador_ataque(self, tipo: str, valor_base: int) -> Ataque:
@@ -141,6 +140,20 @@ class Personaje:
     def mostrar_habilidades(self) -> None:
         for i, habilidad in enumerate(self.habilidades):
             print(f"{i} : {habilidad.nombre}")
+
+    def ejecutar_habilidad(self, indice: int, objetivo: 'Personaje') -> bool:
+        if 0 <= indice < len(self.habilidades):
+            habilidad = self.habilidades[indice]
+        
+            if self.magia_restante >= habilidad.costo_magia:
+                habilidad.usar(self, objetivo)
+                return True
+            else:
+                print(self.mensajero.falta_mana(self.nombre, habilidad.nombre))
+                return False
+        else :
+            print(self.mensajero.habilidad_inexistente())
+        return False
 
     def defenderse(self) -> None:
         print(f"{self.mensajero.mensaje_defenderse()}")
@@ -156,6 +169,3 @@ class Personaje:
         self.vida_restante=0
         print(f"{self.mensajero.mensaje_muerte()}")
         self.experiencia_otorgada = self.nivel* random.randint(2,4)
-
-
-

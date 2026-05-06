@@ -1,5 +1,5 @@
 from app.engine.efectos import Quemado
-from app.entidades.base import Personaje
+from app.entidades.personaje import Personaje
 
 class Habilidad:
     def __init__(self, nombre, tipo, potencia, costo_magia):

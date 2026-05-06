@@ -1,4 +1,4 @@
-from .base import Personaje
+from .personaje import Personaje
 from app.engine.mensajes import MensajeroStrider
 import random
 

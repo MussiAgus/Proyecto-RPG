@@ -1,11 +1,40 @@
-from .entidades.berserker import Berserker
-from .entidades.mago import Mago
-from .engine.batalla import Batalla
+from app.entidades.factoryClases import PersonajeFactory
+from app.bd.bd_manager import DBManager
+from app.engine.batalla import Batalla
 
-yo = Mago("Sbender")
-enemigo = Berserker("TheBoss")
+bd = DBManager()
+jugador = None
+contrincante = PersonajeFactory.crear_personaje("The Boss", "Berserker")
 
-yo.subir_nivel(5)
+while True:
+    opcion = input("1) Crear un personaje.\n 2) Cargar personaje.\n>")
+    if(opcion == "1"):
+        nombre = input("Cual sera el nombre de tu heroe? \n >")
+        clase = input("Y cual sera su especialidad? \n>")
+    
+        if not bd.buscar_nombre(nombre):
+            jugador = PersonajeFactory.crear_personaje(nombre, clase)
+            bd.guardar_personaje(jugador)
+            print("\nPersonaje creado con exito!\n")
+            break
+        else:
+            print("\nYa hay un personaje con ese nombre. Elegi otro, o eliminalo.\n")
+            continue
+    
+    else:
+        bd.mostrar_personajes_creados()
 
-round = Batalla(yo, enemigo)
-round.comienzo()
+        nombre = input("\nCual es el nombre de tu heroe?\n")
+        datos_personaje = bd.cargar_personaje(nombre)
+        if datos_personaje:
+            jugador = PersonajeFactory.cargar_personaje(datos_personaje)
+            break
+        else:
+            print("No existe un jugador con ese nombre...")
+            continue
+
+if jugador is not None:
+    pelea = Batalla(jugador,contrincante)
+    pelea.comienzo()
+else:
+    print("No se pudo conseguir un jugador")

@@ -1,4 +1,4 @@
-from  app.entidades.base import Personaje
+from  app.entidades.personaje import Personaje
 from app.engine.mensajes import MensajeroBatalla
 import os
 

@@ -1,4 +1,4 @@
-from app.entidades.base import Personaje
+from app.entidades.personaje import Personaje
 from app.engine.habilidad import BolaDeFuego
 from app.engine.mensajes import MensajeroMago
 

@@ -23,4 +23,4 @@ class Berserker(Personaje):
         pass
     
     def aumentos_especificos(self) -> tuple:
-        return (15,4,1,5,0,1,0)
+        return (15,4,1,5,0,1,0,4)

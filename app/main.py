@@ -34,6 +34,7 @@ while True:
             continue
 
 if jugador is not None:
+    jugador.subir_nivel(10)
     pelea = Batalla(jugador,contrincante)
     pelea.comienzo()
 else:

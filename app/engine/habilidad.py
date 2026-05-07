@@ -7,6 +7,7 @@ class Habilidad:
         self.tipo = tipo
         self.potencia = potencia
         self.costo_magia = costo_magia
+        # Crear costo energia
 
     def usar(self, atacante: Personaje, defensor: Personaje) -> None:
         ataque = atacante.generador_ataque(self.tipo, self.potencia)
@@ -32,3 +33,10 @@ class BolaDeFuego(Habilidad):
         ataque = atacante.generador_ataque(self.tipo, self.potencia)
         defensor.recibir_danio(ataque)
         defensor.efectos_activos.append(Quemado())
+
+
+#atributo para que la habilidad vaya a una clase especifica, y despues se active un selector al azar que le desbloquee una habiliad de esa lista.
+
+#Corte letal (salto con hacha) para el guerrero.
+
+#Doble flecha (dos golpes) para el strider.

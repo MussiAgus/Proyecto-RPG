@@ -5,7 +5,7 @@ from app.engine.mensajes import MensajeroClases, MensajeroVacio
 from abc import ABC, abstractmethod
 
 class Personaje:
-    def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, mensajero=None):
+    def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, stamina, mensajero=None):
         self.nombre=nombre
         self.clase=clase
         self.nivel=1
@@ -18,6 +18,8 @@ class Personaje:
         self._magia=magia
         self._magia_restante=magia
         self._ataque_magico=ataque_magico
+        self._stamina = stamina
+        self._stamina_restante = stamina
         self.efectos_activos=[]
         self.habilidades=[]
         self.experiencia_necesaria = 10
@@ -70,6 +72,17 @@ class Personaje:
     @property
     def ataque_magico(self) -> int:
         return self._ataque_magico
+    
+    @property
+    def stamina(self) ->int:
+        return self._stamina
+    
+    def stamina_restante(self):
+        return self._stamina_restante
+    
+    @stamina_restante.setter
+    def stamina_restante(self, valor: int) -> None:
+        self._stamina_restante = max(0, min(valor, self._stamina))
 
     @abstractmethod
     def ataque_basico(self) -> Ataque:
@@ -79,7 +92,7 @@ class Personaje:
         pass
 
     def subir_nivel(self, niveles: int) -> None:
-        puntos_vida, puntos_defensa, puntos_defensa_magica, puntos_ataque, puntos_ataque_magico, puntos_agilidad, puntos_magia = self.aumentos_especificos()
+        puntos_vida, puntos_defensa, puntos_defensa_magica, puntos_ataque, puntos_ataque_magico, puntos_agilidad, puntos_magia, puntos_stamina = self.aumentos_especificos()
         for indice in range(niveles):
             self.nivel+=1
             self._vida += (puntos_vida + random.randint(1, 3))
@@ -89,6 +102,7 @@ class Personaje:
             self._ataque_magico+=(puntos_ataque_magico + random.randint(0, 3))
             self._agilidad+= (puntos_agilidad + random.randint(1,2))
             self._magia+= (puntos_magia + random.randint(1,4))
+            self._stamina+= (puntos_stamina + random.radint(1,3))
         
         self.magia_restante=self._magia
         self.vida_restante=self._vida

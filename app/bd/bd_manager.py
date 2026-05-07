@@ -35,8 +35,8 @@ class DBManager:
             
             query = """
             INSERT INTO personaje 
-            (nombre, clase, nivel, experiencia, vida_max, defensa, ataque, agilidad, defensa_magica, ataque_magico, magia_max)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (nombre, clase, nivel, experiencia, vida_max, defensa, ataque, agilidad, defensa_magica, ataque_magico, magia_max, stamina_max)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
             valores = (
                 personaje.nombre, 
@@ -50,6 +50,7 @@ class DBManager:
                 personaje._defensa_magica,
                 personaje._ataque_magico,
                 personaje._magia,
+                personaje._stamina
             )
             
             cursor.execute(query, valores)
@@ -117,7 +118,7 @@ class DBManager:
 
         try:
             cursor = conexion.cursor()
-            query = "SELECT nombre, clase, nivel, experiencia, vida_max, defensa, ataque, agilidad, defensa_magica, ataque_magico, magia_max FROM personaje WHERE nombre= %s"
+            query = "SELECT nombre, clase, nivel, experiencia, vida_max, defensa, ataque, agilidad, defensa_magica, ataque_magico, magia_max, stamina_max FROM personaje WHERE nombre= %s"
             cursor.execute(query,(nombre,))
             resultado = cursor.fetchone()
             
@@ -169,7 +170,8 @@ class DBManager:
                     agilidad = %s,
                     defensa_magica = %s, 
                     ataque_magico = %s, 
-                    magia_max = %s
+                    magia_max = %s,
+                    stamina_max = %s,
                 WHERE nombre = %s
             """
             valores = (
@@ -182,7 +184,8 @@ class DBManager:
                 personaje.agilidad,
                 personaje.defensa_magica,
                 personaje.ataque_magico,     
-                personaje.magia,             
+                personaje.magia,
+                personaje.stamina,        
                 personaje.nombre             
             )
         

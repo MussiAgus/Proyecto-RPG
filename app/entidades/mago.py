@@ -26,4 +26,4 @@ class Mago(Personaje):
             return self.generador_ataque("Fisico", self.ataque)
     
     def aumentos_especificos(self) -> tuple:
-        return (5,1,4,1,4,1,6)
+        return (5,1,4,1,4,1,6,1)

@@ -26,4 +26,4 @@ class Strider(Personaje):
 
     def aumentos_especificos(self) -> tuple:
     # (vida, def, def_mag, ataque, ataque_mag, agi, mag)
-        return (10, 2, 2, 4, 0, 6, 0)
+        return (10, 2, 2, 4, 0, 6, 0, 2)

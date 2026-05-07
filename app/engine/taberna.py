@@ -1,0 +1,3 @@
+
+class Taberna:
+    pass

@@ -9,8 +9,8 @@ class Efecto:
         pass
 
 class Quemado(Efecto):
-    def __init__(self):
-        super().__init__("Quemado", 2)
+    def __init__(self, duracion):
+        super().__init__("Quemado", duracion)
 
     def aplicar(self, personaje: Personaje) ->None:
         danio = 10

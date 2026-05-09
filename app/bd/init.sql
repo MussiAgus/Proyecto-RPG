@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS personaje (
     ataque_magico INT NOT NULL,
     magia_max INT NOT NULL,
     stamina_max INT NOT NULL,
+    dinero INT NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

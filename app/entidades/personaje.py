@@ -5,7 +5,7 @@ from app.engine.mensajes import MensajeroClases, MensajeroVacio
 from abc import ABC, abstractmethod
 
 class Personaje:
-    def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, stamina, mensajero=None):
+    def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, stamina, dinero, mensajero=None):
         self.nombre=nombre
         self.clase=clase
         self.nivel=1
@@ -20,6 +20,7 @@ class Personaje:
         self._ataque_magico=ataque_magico
         self._stamina = stamina
         self._stamina_restante = stamina
+        self._dinero = dinero
         self.efectos_activos=[]
         self.habilidades=[]
         self.experiencia_necesaria = 10
@@ -77,12 +78,17 @@ class Personaje:
     def stamina(self) ->int:
         return self._stamina
     
+    @property
     def stamina_restante(self):
         return self._stamina_restante
     
     @stamina_restante.setter
     def stamina_restante(self, valor: int) -> None:
         self._stamina_restante = max(0, min(valor, self._stamina))
+    
+    @property
+    def dinero(self):
+        return self._dinero
 
     @abstractmethod
     def ataque_basico(self) -> Ataque:
@@ -102,7 +108,7 @@ class Personaje:
             self._ataque_magico+=(puntos_ataque_magico + random.randint(0, 3))
             self._agilidad+= (puntos_agilidad + random.randint(1,2))
             self._magia+= (puntos_magia + random.randint(1,4))
-            self._stamina+= (puntos_stamina + random.radint(1,3))
+            self._stamina+= (puntos_stamina + random.randint(1,3))
         
         self.magia_restante=self._magia
         self.vida_restante=self._vida

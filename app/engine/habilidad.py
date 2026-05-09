@@ -32,7 +32,7 @@ class BolaDeFuego(Habilidad):
         
         ataque = atacante.generador_ataque(self.tipo, self.potencia)
         defensor.recibir_danio(ataque)
-        defensor.efectos_activos.append(Quemado())
+        defensor.efectos_activos.append(Quemado(3))
 
 
 #atributo para que la habilidad vaya a una clase especifica, y despues se active un selector al azar que le desbloquee una habiliad de esa lista.

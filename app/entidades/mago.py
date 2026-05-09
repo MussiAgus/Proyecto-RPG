@@ -14,6 +14,8 @@ class Mago(Personaje):
             defensa_magica= 25,
             ataque_magico=40,
             magia=100,
+            stamina = 5,
+            dinero = 50,
             mensajero=MensajeroMago()
             )
         self.habilidades.append(BolaDeFuego())

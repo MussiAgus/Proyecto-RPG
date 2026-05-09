@@ -13,6 +13,8 @@ class Berserker(Personaje):
             defensa_magica= 5,
             ataque_magico=0,
             magia=0,
+            stamina = 40,
+            dinero = 50,
             mensajero=MensajeroGuerrero()
             )
 

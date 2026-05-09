@@ -35,6 +35,7 @@ while True:
 
 if jugador is not None:
     jugador.subir_nivel(10)
+    print(f"\n\nEl jugador tiene {jugador.dinero} en sus bolsillos! \n\n")
     pelea = Batalla(jugador,contrincante)
     pelea.comienzo()
 else:

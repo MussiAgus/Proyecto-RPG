@@ -18,7 +18,7 @@ class PersonajeFactory:
 
     @staticmethod
     def cargar_personaje(datos_db):
-        # nom, clase, lvl, xp, vida, defensa, atk, agil, def_mag, atk_mag, mag = datos_db
+        # nom, clase, lvl, xp, vida, defensa, atk, agil, def_mag, atk_mag, mag, sta, din = datos_db
         if not datos_db:
             return None
         
@@ -33,5 +33,7 @@ class PersonajeFactory:
         personaje._defensa_magica = datos_db[8]
         personaje._ataque_magico = datos_db[9]
         personaje._magia = datos_db[10]
+        personaje._stamina = datos_db[11]
+        personaje._dinero = datos_db[12]
 
         return personaje

@@ -14,6 +14,8 @@ class Strider(Personaje):
             defensa_magica= 10,
             ataque_magico=0,
             magia=0,
+            stamina = 30,
+            dinero = 75, #Ladronzuelo...
             mensajero=MensajeroStrider()
             )
 

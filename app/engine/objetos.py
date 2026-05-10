@@ -9,11 +9,6 @@ clases_permitidas = {
     "Armadura_pesada": ["Berserker"]
 }
 
-catalogo_tienda = {
-    "Pociones de vida": ["Pocion_menor","Pocion_media","Pocion_mayor","Pocion_MAX"],
-    "Pociones de mana": ["Pocion_mana_menor","Pocion_mana_media","Pocion_mana_mayor","Pocion_mana_MAX"]
-}
-
 class Objeto:
     def __init__(self, nombre, costo, categoria, probabilidad, nivel_desbloqueo, clase_permitida):
         self.nombre = nombre
@@ -33,7 +28,7 @@ class Objeto:
             print(f"El objeto {self.nombre} no puede ser usado por un {jugador.nombre}.")
             return False
 
-    def usar(self, jugador, objetivo=None):
+    def usar(self, jugador, objetivo=None, batalla = None):
         pass
 
 class Obj_curacion(Objeto):
@@ -64,7 +59,7 @@ class Pocion_menor(Obj_curacion):
     def usar(self, jugador, objetivo = None):
         carga = 100
         print(f"\nCargando {carga} puntos de vida!\n")
-        jugador.vida_restante(carga)
+        jugador.vida_restante+=carga
 
 class Pocion_media(Obj_curacion):
     def __init__(self):
@@ -79,7 +74,7 @@ class Pocion_media(Obj_curacion):
     def usar(self, jugador, objetivo = None):
         carga = 150
         print(f"\nCargando {carga} puntos de vida!\n")
-        jugador.vida_restante(carga)
+        jugador.vida_restante+=carga
 
 class Pocion_mayor(Obj_curacion):
     def __init__(self):
@@ -94,7 +89,7 @@ class Pocion_mayor(Obj_curacion):
     def usar(self, jugador, objetivo = None):
         carga = 300
         print(f"\nCargando {carga} puntos de vida!\n")
-        jugador.vida_restante(carga)
+        jugador.vida_restante+=carga
 
 class Pocion_MAX(Obj_curacion):
     def __init__(self):
@@ -108,7 +103,7 @@ class Pocion_MAX(Obj_curacion):
     
     def usar(self, jugador, objetivo = None):
         print(f"\nCargando TODOS tus puntos de vida!\n")
-        jugador.vida_restante(jugador.vida)
+        jugador.vida_restante=jugador.vida
 
 # POCIONES DE MANA
 class Pocion_mana_menor(Obj_curacion):
@@ -124,7 +119,7 @@ class Pocion_mana_menor(Obj_curacion):
     def usar(self, jugador, objetivo = None):
         carga = 40
         print(f"\nCargando {carga} puntos de mana!\n")
-        jugador.magia_restante(carga)
+        jugador.magia_restante+=carga
 
 class Pocion_mana_media(Obj_curacion):
     def __init__(self):
@@ -139,7 +134,7 @@ class Pocion_mana_media(Obj_curacion):
     def usar(self, jugador, objetivo = None):
         carga = 80
         print(f"\nCargando {carga} puntos de mana!\n")
-        jugador.magia_restante(carga)
+        jugador.magia_restante+=carga
 
 class Pocion_mana_mayor(Obj_curacion):
     def __init__(self):
@@ -154,7 +149,7 @@ class Pocion_mana_mayor(Obj_curacion):
     def usar(self, jugador, objetivo = None):
         carga = 120
         print(f"\nCargando {carga} puntos de mana!\n")
-        jugador.magia_restante(carga)
+        jugador.magia_restante+=carga
 
 class Pocion_mana_MAX(Obj_curacion):
     def __init__(self):
@@ -168,6 +163,28 @@ class Pocion_mana_MAX(Obj_curacion):
     
     def usar(self, jugador, objetivo = None):
         print(f"\nCargando TODOS tus puntos de mana!\n")
-        jugador.magia_restante(jugador.magia)
+        jugador.magia_restante=jugador.magia
 
 # AUMENTOS DE STATS
+
+
+
+
+
+#Esto siempre tiene que ir al final
+
+catalogo_tienda = {
+    "Pociones de vida": ["Pocion_menor","Pocion_media","Pocion_mayor","Pocion_MAX"],
+    "Pociones de mana": ["Pocion_mana_menor","Pocion_mana_media","Pocion_mana_mayor","Pocion_mana_MAX"]
+}
+
+mapeo_objetos = {
+    "Pocion_menor": Pocion_menor, # pyright: ignore[reportUndefinedVariable]
+    "Pocion_media": Pocion_media, # pyright: ignore[reportUndefinedVariable]
+    "Pocion_mayor": Pocion_mayor, # pyright: ignore[reportUndefinedVariable]
+    "Pocion_MAX" : Pocion_MAX, # pyright: ignore[reportUndefinedVariable]
+    "Pocion_mana_menor" : Pocion_mana_menor, # pyright: ignore[reportUndefinedVariable]
+    "Pocion_mana_media" : Pocion_mana_media, # pyright: ignore[reportUndefinedVariable]
+    "Pocion_mana_mayor" : Pocion_mana_mayor, # pyright: ignore[reportUndefinedVariable]
+    "Pocion_mana_MAX" : Pocion_mana_MAX # pyright: ignore[reportUndefinedVariable]
+}

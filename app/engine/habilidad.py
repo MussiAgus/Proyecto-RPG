@@ -1,5 +1,10 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
 from app.engine.efectos import Quemado
-from app.entidades.personaje import Personaje
+
+if TYPE_CHECKING:
+    from app.entidades.personaje import Personaje
+
 
 class Habilidad:
     def __init__(self, nombre, tipo, potencia, costo_magia):
@@ -37,6 +42,12 @@ class BolaDeFuego(Habilidad):
 
 #atributo para que la habilidad vaya a una clase especifica, y despues se active un selector al azar que le desbloquee una habiliad de esa lista.
 
-#Corte letal (salto con hacha) para el guerrero.
+#Corte letal (salto con hacha) para el guerrero. Subir defensa durante x cantidad de turnos (Muro de carne).
 
-#Doble flecha (dos golpes) para el strider.
+#Doble flecha (dos golpes) para el strider. Persuasion (Probabilidad de tener dos turnos).
+
+#Siempre al final!
+
+mapeo_habilidades ={
+    "BolaDeFuego": BolaDeFuego # pyright: ignore[reportUndefinedVariable]
+}

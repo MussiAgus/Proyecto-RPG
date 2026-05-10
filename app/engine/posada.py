@@ -4,6 +4,7 @@ class Posada:
     def __init__(self, personaje):
         self.personaje = personaje
         self.primer_ingreso = False
+        #Falta agregar mensajero
 
     #loop principal
     def recepcion(self):
@@ -17,12 +18,16 @@ class Posada:
             
             if accion == "1":
                 self.descanso()
+                continue
             elif accion == "2":
                 self.entrar_tienda()
+                continue
             elif accion == "3": 
                 self.ver_estadisticas()
+                continue
             elif accion == "4":
                 self.salir_aventuras()
+                continue
             elif accion == "5":
                 print("\nEspero vuelvas pronto!\n")
                 break
@@ -46,9 +51,9 @@ class Posada:
     def descanso(self):
         if self.personaje.dinero >= 5:
             self.personaje.dinero-=5;
-            self.personaje.vida_restante(self.personaje.vida)
-            self.personaje.magia_restante(self.personaje.magia)
-            self.personaje.stamina_restante(self.personaje.stamina)
+            self.personaje.vida_restante=self.personaje.vida
+            self.personaje.magia_restante=self.personaje.magia
+            self.personaje.stamina_restante=self.personaje.stamina
             print(f"5 monedas gastadas.\nTe quedan {self.personaje.dinero}\n\n")
             print(f"Bueno, esta es la llave de la habitacion {random.randint(1,10)}. Espero descanses bien!")
         

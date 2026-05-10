@@ -52,10 +52,11 @@ class Batalla:
             ganador, perdedor = self.pj_2, self.pj_1
             
         print(self.mensajero.batalla_terminada(ganador.nombre))
-        self.repartir_xp(ganador,perdedor)
+        self.repartir_premios(ganador,perdedor)
 
-    def repartir_xp(self, ganador: Personaje, perdedor: Personaje) -> None:
+    def repartir_premios(self, ganador: Personaje, perdedor: Personaje) -> None:
         ganador.recibir_xp(perdedor.experiencia_otorgada)
+        ganador.recibir_dinero(perdedor.dinero_otorgado)
 
     #Esto hay que desarrollarlo mas. Pero despues.
     def accion_random(self, atacante: Personaje, defensor: Personaje) -> None:

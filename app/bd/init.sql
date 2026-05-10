@@ -15,3 +15,18 @@ CREATE TABLE IF NOT EXISTS personaje (
     dinero INT NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS inventario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    personaje_id INT NOT NULL,
+    nombre_clase VARCHAR(100) NOT NULL,
+    cantidad INT DEFAULT 1,
+    FOREIGN KEY (personaje_id) REFERENCES personaje(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS habilidades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    personaje_id INT NOT NULL,
+    nombre_clase VARCHAR(100) NOT NULL,
+    FOREIGN KEY (personaje_id) REFERENCES personaje(id) ON DELETE CASCADE
+);

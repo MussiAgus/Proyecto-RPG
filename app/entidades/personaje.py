@@ -5,7 +5,8 @@ from app.engine.mensajes import MensajeroClases, MensajeroVacio
 from abc import ABC, abstractmethod
 
 class Personaje:
-    def __init__(self, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, stamina, dinero, mensajero=None):
+    def __init__(self,id, nombre, clase, vida, defensa, defensa_magica, ataque, agilidad, magia, ataque_magico, stamina, dinero, mensajero=None):
+        self.id = id
         self.nombre=nombre
         self.clase=clase
         self.nivel=1
@@ -21,8 +22,10 @@ class Personaje:
         self._stamina = stamina
         self._stamina_restante = stamina
         self._dinero = dinero
+        self.dinero_otorgado = 0
         self.efectos_activos=[]
         self.habilidades=[]
+        self.objetos = []
         self.experiencia_necesaria = 10
         self.experiencia_actual = 0
         self.experiencia_otorgada = 0
@@ -89,6 +92,10 @@ class Personaje:
     @property
     def dinero(self):
         return self._dinero
+    
+    @dinero.setter
+    def dinero(self, valor: int) -> None:
+        self._dinero = max(0, min(valor, 1000000))
 
     @abstractmethod
     def ataque_basico(self) -> Ataque:
@@ -116,6 +123,9 @@ class Personaje:
 
     def mostrar_estadisticas(self) -> None:
         print(self.mensajero.formato_estadisticas(self))
+
+    def recibir_dinero(self, cantidad):
+        self.dinero+=cantidad
 
     def recibir_xp(self, experiencia: int) -> None:
         
@@ -157,6 +167,28 @@ class Personaje:
         danio = int(valor_base + valor_base * random.random())
         return Ataque(tipo, danio)
 
+    def mostrar_objetos(self):
+        print("\nNum objeto -- Nombre -- Cantidad\n")
+        for indice, objeto in enumerate(self.objetos):
+            print(f"{indice} -- {objeto['objeto']} -- {objeto['cantidad']}\n")
+
+    def usar_objetos(self):
+        
+        indice = int(input("Ingrese el numero de objeto a usar...\n>"))
+        if indice >=0 and indice <len(self.objetos):
+            objeto = self.objetos[indice]['objeto']
+            objeto.usar(self)
+            self.objetos[indice]['cantidad']-=1
+            if self.objetos[indice]['cantidad']==0:
+                del self.objetos[indice] 
+    
+    def sumar_objeto(self, objeto, cantidad):
+        dato={
+            "objeto" :objeto,
+            "cantidad" :cantidad
+        }
+        self.objetos.append(dato)
+
     def mostrar_habilidades(self) -> None:
         for i, habilidad in enumerate(self.habilidades):
             print(f"{i} : {habilidad.nombre}")
@@ -175,6 +207,9 @@ class Personaje:
             print(self.mensajero.habilidad_inexistente())
         return False
 
+    def sumar_habilidad(self, habilidad):
+        self.objetos.append(habilidad)
+
     def defenderse(self) -> None:
         print(f"{self.mensajero.mensaje_defenderse()}")
         self.esta_defendiendo = True
@@ -189,3 +224,5 @@ class Personaje:
         self.vida_restante=0
         print(f"{self.mensajero.mensaje_muerte()}")
         self.experiencia_otorgada = self.nivel* random.randint(2,4)
+        self.dinero_otorgado = int(self._dinero * (0.5))
+        self.dinero-=self.dinero_otorgado

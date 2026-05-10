@@ -22,7 +22,7 @@ class MensajeroClases(ABC):
             f"\n{'='*30}\n"
             f"CLASE: {p.clase} | NOMBRE: {p.nombre} | NIVEL: {p.nivel}\n"
             f"{'-'*30}\n"
-            f"Vida Max: {p.vida} | Defensa: {p.defensa} | Def. Mágica: {p.defensa_magica}\n"
+            f"Vida Max: {p.vida} | Defensa: {p.defensa} | Def. Mágica: {p.defensa_magica} | Atk. Magico: {p.ataque_magico}\n"
             f"Ataque: {p.ataque} | Magia: {p.magia} | Agilidad: {p.agilidad}\n"
             f"{'='*30}\n"
     )

@@ -2,8 +2,9 @@ from .personaje import Personaje
 from app.engine.mensajes import MensajeroGuerrero
 
 class Berserker(Personaje):
-    def __init__(self, nombre):
+    def __init__(self, nombre, id=None):
         super().__init__(
+            id =id,
             nombre=nombre,
             clase="Berserker",
             vida=300,

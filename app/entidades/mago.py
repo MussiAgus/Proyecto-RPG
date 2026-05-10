@@ -3,8 +3,9 @@ from app.engine.habilidad import BolaDeFuego
 from app.engine.mensajes import MensajeroMago
 
 class Mago(Personaje):
-    def __init__(self, nombre):
+    def __init__(self, nombre, id=None):
         super().__init__(
+            id =id,
             nombre=nombre,
             clase="Mago",
             vida=150,

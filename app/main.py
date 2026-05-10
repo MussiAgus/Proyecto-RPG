@@ -1,6 +1,9 @@
 from bd.bd_manager import DBManager
 from engine.batalla import Batalla
 from entidades.factoryClases import PersonajeFactory
+from entidades.factoryHabilidades import HabilidadesFactory
+from entidades.factoryObjetos import ObjetosFactory
+from engine.posada import Posada
 
 bd = DBManager()
 jugador = None
@@ -25,9 +28,13 @@ while True:
         bd.mostrar_personajes_creados()
 
         nombre = input("\nCual es el nombre de tu heroe?\n")
-        datos_personaje = bd.cargar_personaje(nombre)
+        datos_personaje, lista_objetos, lista_habilidades = bd.cargar_personaje(nombre)
+
         if datos_personaje:
             jugador = PersonajeFactory.cargar_personaje(datos_personaje)
+            ObjetosFactory.cargar_inventario(jugador,lista_objetos)
+            HabilidadesFactory.cargar_habilidades(jugador, lista_habilidades)
+
             break
         else:
             print("No existe un jugador con ese nombre...")
@@ -36,7 +43,9 @@ while True:
 if jugador is not None:
     jugador.subir_nivel(10)
     print(f"\n\nEl jugador tiene {jugador.dinero} en sus bolsillos! \n\n")
-    pelea = Batalla(jugador,contrincante)
-    pelea.comienzo()
+    #pelea = Batalla(jugador,contrincante)
+    #pelea.comienzo()
+    Comienzo = Posada(jugador)
+    Comienzo.recepcion()
 else:
     print("No se pudo conseguir un jugador")

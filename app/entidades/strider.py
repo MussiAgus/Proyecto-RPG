@@ -3,8 +3,9 @@ from app.engine.mensajes import MensajeroStrider
 import random
 
 class Strider(Personaje):
-    def __init__(self, nombre):
+    def __init__(self, nombre, id=None):
         super().__init__(
+            id =id,
             nombre=nombre,
             clase="Strider",
             vida=200,

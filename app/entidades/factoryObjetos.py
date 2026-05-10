@@ -16,3 +16,4 @@ class ObjetosFactory:
             if clase_referencia:
                 item_instanciado = clase_referencia()
                 personaje.sumar_objeto(item_instanciado, cantidad)
+    

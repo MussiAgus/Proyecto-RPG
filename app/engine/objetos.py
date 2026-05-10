@@ -1,169 +1,181 @@
 import random
 
-clases_permitidas = {
-    "todos": ["Todos"],
-    "magicos": ["Mago"],
-    "fisicos": ["Berserker", "Strider"],
-    "Armadura_liviana": ["Mago", "Strider"],
-    "Armadura_media": ["Strider","Berserker"],
-    "Armadura_pesada": ["Berserker"]
-}
 
 class Objeto:
-    def __init__(self, nombre, costo, categoria, probabilidad, nivel_desbloqueo, clase_permitida):
-        self.nombre = nombre
-        self.costo = costo
-        self.costo_venta = self.costo/2 + self.costo * 0.30
-        self.categoria = categoria
-        self.probabilidad = probabilidad
-        self.nivel_desbloqueo = nivel_desbloqueo
-        self.clase_permitida = clase_permitida
+    # Atributo de clase: Centralizamos las reglas aquí
+    REGLAS_CLASES = {
+        "todos": ["Mago", "Berserker", "Strider"],
+        "magicos": ["Mago"],
+        "fisicos": ["Berserker", "Strider"],
+        "Armadura_liviana": ["Mago", "Strider"],
+        "Armadura_media": ["Strider", "Berserker"],
+        "Armadura_pesada": ["Berserker"]
+    }
+
+    rango = "Normal"
+    nombre = ""
+    descripcion = ""
+    costo = 0
+    probabilidad = 0
+    nivel_desbloqueo = 1
+    clase_permitida = "todos" # Guardamos la "llave", no la lista
+
+    @property
+    def costo_venta(self):
+        return int(self.costo * 0.6)
     
-    def validar_uso(self, jugador):
-        lista_permitida = clases_permitidas.get(self.clase_permitida, [])
-        
-        if jugador.clase in lista_permitida or self.clase_permitida == "todos":
-            return True
-        else:
-            print(f"El objeto {self.nombre} no puede ser usado por un {jugador.nombre}.")
-            return False
+    @classmethod
+    def puede_usar(cls, personaje_clase):
+        permitidos = cls.REGLAS_CLASES.get(cls.clase_permitida, [])
+        return personaje_clase in permitidos
 
     def usar(self, jugador, objetivo=None, batalla = None):
         pass
 
-class Obj_curacion(Objeto):
-    def __init__(self, nombre, costo, probabilidad, nivel_desbloqueo, clase_permitida):
-        super().__init__(nombre, costo, "curacion", probabilidad, nivel_desbloqueo, clase_permitida)
-
-class Obj_powerUp(Objeto):
-    def __init__(self, nombre, costo, probabilidad, nivel_desbloqueo, clase_permitida):
-        super().__init__(nombre, costo, "powerup", probabilidad, nivel_desbloqueo, clase_permitida)
-
-class Obj_ataque(Objeto):
-    def __init__(self, nombre, costo, probabilidad, nivel_desbloqueo, clase_permitida):
-        super().__init__(nombre, costo, "ataque", probabilidad, nivel_desbloqueo, clase_permitida)
-
-
 # POCIONES DE VIDA
 
-class Pocion_menor(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion menor",
-            costo = 10,
-            probabilidad = 0.7,
-            nivel_desbloqueo= 1,
-            clase_permitida = clases_permitidas["todos"]
-        )
+class Pocion_menor(Objeto):
+    nombre = "Pocion menor"
+    descripcion = "Cura 100 pts. de vida."
+    costo = 10
+    probabilidad = 0.7
+    nivel_desbloqueo= 1
+    clase_permitida = "todos"
     
-    def usar(self, jugador, objetivo = None):
+    def usar(self, jugador):
+        if(jugador.vida_restante == jugador.vida):
+            print("\nPero la vida esta completa!\n")
+            return False
         carga = 100
         print(f"\nCargando {carga} puntos de vida!\n")
         jugador.vida_restante+=carga
+        return True
 
-class Pocion_media(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion media",
-            costo = 15,
-            probabilidad = 0.55,
-            nivel_desbloqueo= 3,
-            clase_permitida = clases_permitidas["todos"]
-        )
+class Pocion_media(Objeto):
+
+    nombre = "Pocion media"
+    descripcion = "Cura 150 pts. de vida."
+    costo = 15
+    probabilidad = 0.55
+    nivel_desbloqueo= 3
+    clase_permitida = "todos"
     
-    def usar(self, jugador, objetivo = None):
+    def usar(self, jugador):
+        if(jugador.vida_restante == jugador.vida):
+            print("\nPero la vida esta completa!\n")
+            return False
         carga = 150
         print(f"\nCargando {carga} puntos de vida!\n")
         jugador.vida_restante+=carga
+        return True
 
-class Pocion_mayor(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion mayor",
-            costo = 25,
-            probabilidad = 0.3,
-            nivel_desbloqueo= 5,
-            clase_permitida = clases_permitidas["todos"]
-        )
+class Pocion_mayor(Objeto):
+
+    nombre = "Pocion mayor"
+    descripcion = "Cura 300 pts. de vida."
+    costo = 25
+    probabilidad = 0.3
+    nivel_desbloqueo= 5
+    clase_permitida ="todos"
     
-    def usar(self, jugador, objetivo = None):
+    def usar(self, jugador):
+        if(jugador.vida_restante == jugador.vida):
+            print("\nPero la vida esta completa!\n")
+            return False
         carga = 300
         print(f"\nCargando {carga} puntos de vida!\n")
         jugador.vida_restante+=carga
+        return True
 
-class Pocion_MAX(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion MAX",
-            costo = 40,
-            probabilidad = 0.2,
-            nivel_desbloqueo= 8,
-            clase_permitida = clases_permitidas["todos"]
-        )
+class Pocion_MAX(Objeto):
+
+    rango = "Medio"
+    nombre = "Pocion MAX"
+    descripcion = "Cura TODA la vida."
+    costo = 40
+    probabilidad = 0.2
+    nivel_desbloqueo= 8
+    clase_permitida = "todos"
     
-    def usar(self, jugador, objetivo = None):
+    def usar(self, jugador):
+        if(jugador.vida_restante == jugador.vida):
+            print("\nPero la vida esta completa!\n")
+            return False
         print(f"\nCargando TODOS tus puntos de vida!\n")
         jugador.vida_restante=jugador.vida
+        return True
 
 # POCIONES DE MANA
-class Pocion_mana_menor(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion mana inf.",
-            costo = 12,
-            probabilidad = 0.7,
-            nivel_desbloqueo= 1,
-            clase_permitida = clases_permitidas["magicos"]
-        )
+class Pocion_mana_menor(Objeto):
+
+    nombre = "Pocion mana inf."
+    descripcion = "Recupera 40 puntos de mana."
+    costo = 12
+    probabilidad = 0.7
+    nivel_desbloqueo= 1
+    clase_permitida = "magicos"
     
-    def usar(self, jugador, objetivo = None):
+    def usar(self, jugador):
+        if(jugador.magia_restante == jugador.magia):
+            print("\nPero estas rebosante de mana...\n")
+            return False
         carga = 40
         print(f"\nCargando {carga} puntos de mana!\n")
         jugador.magia_restante+=carga
+        return True
 
-class Pocion_mana_media(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion mana med.",
-            costo = 17,
-            probabilidad = 0.55,
-            nivel_desbloqueo= 3,
-            clase_permitida = clases_permitidas["magicos"]
-        )
+class Pocion_mana_media(Objeto):
     
-    def usar(self, jugador, objetivo = None):
+    nombre = "Pocion mana med."
+    descripcion = "Recupera 80 puntos de mana."
+    costo = 17
+    probabilidad = 0.55
+    nivel_desbloqueo= 3
+    clase_permitida = "magicos"
+    
+    def usar(self, jugador):
+        if(jugador.magia_restante == jugador.magia):
+            print("\nPero estas rebosante de mana...\n")
+            return False
         carga = 80
         print(f"\nCargando {carga} puntos de mana!\n")
         jugador.magia_restante+=carga
+        return True
 
-class Pocion_mana_mayor(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion mana GR.",
-            costo = 30,
-            probabilidad = 0.3,
-            nivel_desbloqueo= 5,
-            clase_permitida = clases_permitidas["magicos"]
-        )
+class Pocion_mana_mayor(Objeto):
     
-    def usar(self, jugador, objetivo = None):
+    nombre = "Pocion mana GR."
+    descripcion = "Recupera 120 puntos de mana."
+    costo = 30
+    probabilidad = 0.3
+    nivel_desbloqueo= 5
+    clase_permitida = "magicos"
+    
+    def usar(self, jugador):
+        if(jugador.magia_restante == jugador.magia):
+            print("\nPero estas rebosante de mana...\n")
+            return False
         carga = 120
         print(f"\nCargando {carga} puntos de mana!\n")
         jugador.magia_restante+=carga
+        return True
 
-class Pocion_mana_MAX(Obj_curacion):
-    def __init__(self):
-        super().__init__(
-            nombre = "Pocion mana MAX",
-            costo = 50,
-            probabilidad = 0.2,
-            nivel_desbloqueo= 8,
-            clase_permitida = clases_permitidas["magicos"]
-        )
+class Pocion_mana_MAX(Objeto):
     
-    def usar(self, jugador, objetivo = None):
+    nombre = "Pocion mana MAX"
+    descripcion = "Recupera TODO el mana."
+    costo = 50
+    probabilidad = 0.2
+    nivel_desbloqueo= 8
+    clase_permitida = "magicos"
+    
+    def usar(self, jugador):
+        if(jugador.magia_restante == jugador.magia):
+            print("\nPero estas rebosante de mana...\n")
+            return False
         print(f"\nCargando TODOS tus puntos de mana!\n")
         jugador.magia_restante=jugador.magia
+        return True
 
 # AUMENTOS DE STATS
 
@@ -174,8 +186,8 @@ class Pocion_mana_MAX(Obj_curacion):
 #Esto siempre tiene que ir al final
 
 catalogo_tienda = {
-    "Pociones de vida": ["Pocion_menor","Pocion_media","Pocion_mayor","Pocion_MAX"],
-    "Pociones de mana": ["Pocion_mana_menor","Pocion_mana_media","Pocion_mana_mayor","Pocion_mana_MAX"]
+    "Pociones de vida": [Pocion_menor,Pocion_media,Pocion_mayor,Pocion_MAX],
+    "Pociones de mana": [Pocion_mana_menor,Pocion_mana_media,Pocion_mana_mayor,Pocion_mana_MAX]
 }
 
 mapeo_objetos = {

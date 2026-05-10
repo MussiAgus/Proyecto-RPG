@@ -1,21 +1,28 @@
 import random
+import time
+from app.engine.tienda import Tienda
 
 class Posada:
     def __init__(self, personaje):
         self.personaje = personaje
-        self.primer_ingreso = False
+        self.primer_ingreso = True #Este solamente se usa cuando el personaje entra pro primero vez
+        self.ingreso_repetido = False #Este si pasa mucho tiempo, hasta que el personaje vuelve al menu.o 
         #Falta agregar mensajero
 
     #loop principal
     def recepcion(self):
         
         while True:
-            if self.primer_ingreso :
-                accion = input(f"Oh! {self.personaje.nombre}, volviste...me alegro!\n1)Descansar y comer\n2)Tienda\n3)Analizar tus estadisticas\n4)Salir de aventura!\n5)Dormir (terminar)\n\n>")
+            if self.primer_ingreso and not self.ingreso_repetido:
+                print("Decime, viajero, para que estas aca?\n")
+                self.primer_ingreso = False
             else:
-                self.primer_ingreso = True
-                accion = input("Decime, viajero, para que estas aca?\n1)Descansar y comer\n2)Tienda\n3)Analizar tus estadisticas\n4)Salir de aventura!\n5)Dormir (terminar)\n\n>")
+                if not self.ingreso_repetido:
+                    print(f"Oh! {self.personaje.nombre}, volviste...me alegro!\n")
+                    self.ingreso_repetido = True
             
+            accion = input(("\n1)Descansar y comer\n2)Tienda\n3)Analizar tus estadisticas\n4)Salir de aventura!\n5)Dormir (terminar)\n\n>"))
+
             if accion == "1":
                 self.descanso()
                 continue
@@ -56,7 +63,11 @@ class Posada:
             self.personaje.stamina_restante=self.personaje.stamina
             print(f"5 monedas gastadas.\nTe quedan {self.personaje.dinero}\n\n")
             print(f"Bueno, esta es la llave de la habitacion {random.randint(1,10)}. Espero descanses bien!")
-        
+            print("\nDescansando...\n")
+            time.sleep(5)
+            #Aca me gustaria poner el clima, pero que varie de forma random entre palabras de una lista.
+            print("Es un nuevo dia! Hoy esta...\n")
+            self.ingreso_repetido = False
         else:
             print("\nPerdon, pero...eh...politicas de la posada. No tenes suficiente dinero.\nPodrias irte de aventuras, no?\n\n")
 
@@ -64,4 +75,5 @@ class Posada:
         pass
 
     def entrar_tienda(self):
-        pass
+        tienda = Tienda(self.personaje)
+        tienda.entrar_tienda()

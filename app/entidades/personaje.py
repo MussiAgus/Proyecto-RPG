@@ -170,24 +170,44 @@ class Personaje:
     def mostrar_objetos(self):
         print("\nNum objeto -- Nombre -- Cantidad\n")
         for indice, objeto in enumerate(self.objetos):
-            print(f"{indice} -- {objeto['objeto']} -- {objeto['cantidad']}\n")
+            print(f'{indice} -- {objeto["objeto"].nombre} -- {objeto["cantidad"]}\n')
 
-    def usar_objetos(self):
-        
+    def usar_objetos(self,enemigo=None, batalla=None):
         indice = int(input("Ingrese el numero de objeto a usar...\n>"))
         if indice >=0 and indice <len(self.objetos):
-            objeto = self.objetos[indice]['objeto']
-            objeto.usar(self)
-            self.objetos[indice]['cantidad']-=1
-            if self.objetos[indice]['cantidad']==0:
-                del self.objetos[indice] 
+            dic = self.objetos[indice]
+
+            if dic["objeto"].usar(self,enemigo,batalla):
+                dic["cantidad"]-=1
+                if dic["cantidad"]==0:
+                    self.objetos.pop(indice)
+            else:
+                print("No usaste el objeto.")
     
     def sumar_objeto(self, objeto, cantidad):
-        dato={
-            "objeto" :objeto,
-            "cantidad" :cantidad
-        }
-        self.objetos.append(dato)
+        encontrado = False
+
+        for elemento in self.objetos:            
+            if isinstance(elemento, dict) and elemento["objeto"].nombre == objeto.nombre:
+                elemento["cantidad"] += cantidad
+                encontrado = True
+                break
+    
+        # 2. Si no se encontró, lo agregamos como un nuevo diccionario (slot)
+        if not encontrado:
+            nuevo_slot = {"objeto": objeto, "cantidad": cantidad}
+            self.objetos.append(nuevo_slot)
+
+    def restar_objeto(self, objeto, cantidad):
+        # Recorremos con índice para poder eliminar de forma segura
+        for i, elemento in enumerate(self.objetos):
+            if elemento["objeto"] == objeto: # Asegúrate si la llave es "item" o "objeto"
+                elemento["cantidad"] -= cantidad
+            
+                if elemento["cantidad"] <= 0:
+                    self.objetos.pop(i) # pop(i) sí elimina el elemento de la lista
+                return True # Objeto encontrado y restado
+        return False
 
     def mostrar_habilidades(self) -> None:
         for i, habilidad in enumerate(self.habilidades):
@@ -208,7 +228,10 @@ class Personaje:
         return False
 
     def sumar_habilidad(self, habilidad):
-        self.objetos.append(habilidad)
+        if habilidad not in self.habilidades:
+            self.habilidades.append(habilidad)
+        else:
+            print(f"Ya conoces la habilidad {habilidad.nombre}")
 
     def defenderse(self) -> None:
         print(f"{self.mensajero.mensaje_defenderse()}")

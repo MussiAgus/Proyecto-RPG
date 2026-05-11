@@ -1,5 +1,4 @@
 from app.entidades.personaje import Personaje
-from app.engine.habilidad import BolaDeFuego
 from app.engine.mensajes import MensajeroMago
 
 class Mago(Personaje):
@@ -19,7 +18,6 @@ class Mago(Personaje):
             dinero = 50,
             mensajero=MensajeroMago()
             )
-        self.habilidades.append(BolaDeFuego())
 
     def ataque_basico(self):
         if(self.magia_restante>=20):

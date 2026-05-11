@@ -1,6 +1,7 @@
 import random
 import time
 from app.engine.tienda import Tienda
+from app.engine.cofre import Cofre
 
 class Posada:
     def __init__(self, personaje):
@@ -47,6 +48,10 @@ class Posada:
         
         print("\nVer estadisticas...? Claro, a ver, pone las manos aca...\n")
         self.personaje.mostrar_estadisticas()
+        print("\n==Habilidades==\n")
+        self.personaje.mostrar_habilidades()
+        print("\n==Objetos==\n")
+        self.personaje.mostrar_objetos()
         
         if self.personaje.nivel <= 5:
             print("\nHey, no te preocupes. Estas recien empezando! Se que vas a ser superfuerte.\n")
@@ -72,7 +77,17 @@ class Posada:
             print("\nPerdon, pero...eh...politicas de la posada. No tenes suficiente dinero.\nPodrias irte de aventuras, no?\n\n")
 
     def salir_aventuras(self):
-        pass
+        resultado = Cofre.generar_botin(self.personaje)
+        if resultado:
+            tipo, objeto = resultado
+            if tipo == "habilidad":
+                print(f'Obtuviste la habilidad {objeto.nombre}!')
+                self.personaje.sumar_habilidad(objeto)
+            elif tipo == "objeto":
+                print(f'Obtuviste el objeto {objeto.nombre}')
+                self.personaje.sumar_objeto(objeto, 1)
+        else:
+            print("Mala suerte, estuviste a punto de obtener algo legendario...")
 
     def entrar_tienda(self):
         tienda = Tienda(self.personaje)

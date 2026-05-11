@@ -17,4 +17,5 @@ class Quemado(Efecto):
         personaje.vida_restante -= danio
         print(f"{personaje.nombre} sufre {danio} de daño por quemadura!")
         self.duracion -= 1
-        
+
+#Hemorragia, robo de vida, dormido, envenenado

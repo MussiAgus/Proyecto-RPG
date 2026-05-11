@@ -162,11 +162,12 @@ class Pocion_mana_mayor(Objeto):
 
 class Pocion_mana_MAX(Objeto):
     
+    rango ="Medio"
     nombre = "Pocion mana MAX"
     descripcion = "Recupera TODO el mana."
     costo = 50
     probabilidad = 0.2
-    nivel_desbloqueo= 8
+    nivel_desbloqueo= 12
     clase_permitida = "magicos"
     
     def usar(self, jugador):
@@ -191,12 +192,17 @@ catalogo_tienda = {
 }
 
 mapeo_objetos = {
-    "Pocion_menor": Pocion_menor, # pyright: ignore[reportUndefinedVariable]
-    "Pocion_media": Pocion_media, # pyright: ignore[reportUndefinedVariable]
-    "Pocion_mayor": Pocion_mayor, # pyright: ignore[reportUndefinedVariable]
-    "Pocion_MAX" : Pocion_MAX, # pyright: ignore[reportUndefinedVariable]
-    "Pocion_mana_menor" : Pocion_mana_menor, # pyright: ignore[reportUndefinedVariable]
-    "Pocion_mana_media" : Pocion_mana_media, # pyright: ignore[reportUndefinedVariable]
-    "Pocion_mana_mayor" : Pocion_mana_mayor, # pyright: ignore[reportUndefinedVariable]
-    "Pocion_mana_MAX" : Pocion_mana_MAX # pyright: ignore[reportUndefinedVariable]
+    "Pocion_menor": Pocion_menor, 
+    "Pocion_media": Pocion_media, 
+    "Pocion_mayor": Pocion_mayor, 
+    "Pocion_MAX" : Pocion_MAX, 
+    "Pocion_mana_menor" : Pocion_mana_menor, 
+    "Pocion_mana_media" : Pocion_mana_media, 
+    "Pocion_mana_mayor" : Pocion_mana_mayor, 
+    "Pocion_mana_MAX" : Pocion_mana_MAX
 }
+
+lista_objetos = [
+    Pocion_menor, Pocion_media, Pocion_mayor, Pocion_MAX,
+    Pocion_mana_menor, Pocion_mana_media, Pocion_mana_mayor, Pocion_mana_MAX
+]

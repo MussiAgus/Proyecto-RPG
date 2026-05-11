@@ -193,7 +193,7 @@ class Personaje:
                 encontrado = True
                 break
     
-        # 2. Si no se encontró, lo agregamos como un nuevo diccionario (slot)
+        # Si no lo encuentra, se agrega como un nuevo diccionario (slot)
         if not encontrado:
             nuevo_slot = {"objeto": objeto, "cantidad": cantidad}
             self.objetos.append(nuevo_slot)
@@ -211,7 +211,7 @@ class Personaje:
 
     def mostrar_habilidades(self) -> None:
         for i, habilidad in enumerate(self.habilidades):
-            print(f"{i} : {habilidad.nombre}")
+            print(f"{i} : {habilidad.nombre} - {habilidad.descripcion}")
 
     def ejecutar_habilidad(self, indice: int, objetivo: 'Personaje') -> bool:
         if 0 <= indice < len(self.habilidades):
@@ -227,11 +227,18 @@ class Personaje:
             print(self.mensajero.habilidad_inexistente())
         return False
 
-    def sumar_habilidad(self, habilidad):
-        if habilidad not in self.habilidades:
-            self.habilidades.append(habilidad)
+    def sumar_habilidad(self, habilidad_nueva):
+        encontrado = False
+        for habilidad in self.habilidades:
+            if habilidad_nueva.nombre == habilidad.nombre:
+                encontrado = True
+                break
+        
+        if encontrado:
+            print(f"Ya conoces la habilidad {habilidad_nueva.nombre}")
         else:
-            print(f"Ya conoces la habilidad {habilidad.nombre}")
+            self.habilidades.append(habilidad_nueva)
+
 
     def defenderse(self) -> None:
         print(f"{self.mensajero.mensaje_defenderse()}")

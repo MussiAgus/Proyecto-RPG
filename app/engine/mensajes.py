@@ -19,12 +19,12 @@ class MensajeroClases(ABC):
 
     def formato_estadisticas(self, p) -> str:
         return (
-            f"\n{'='*30}\n"
-            f"CLASE: {p.clase} | NOMBRE: {p.nombre} | NIVEL: {p.nivel}\n"
-            f"{'-'*30}\n"
+            f"\n{'='*50}\n"
+            f"CLASE: {p.clase} | NOMBRE: {p.nombre} | NIVEL: {p.nivel} | Dinero: {p.dinero}\n" 
+            f"{'-'*50}\n"
             f"Vida Max: {p.vida} | Defensa: {p.defensa} | Def. Mágica: {p.defensa_magica} | Atk. Magico: {p.ataque_magico}\n"
             f"Ataque: {p.ataque} | Magia: {p.magia} | Agilidad: {p.agilidad}\n"
-            f"{'='*30}\n"
+            f"{'='*50}\n"
     )
     @abstractmethod
     def mensaje_defenderse(self) -> str:

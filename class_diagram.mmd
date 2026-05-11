@@ -1,0 +1,144 @@
+classDiagram
+    class Personaje {
+        +int id
+        +str nombre
+        +str clase
+        +int nivel
+        +int experiencia_actual
+        +int experiencia_necesaria
+        +int dinero
+        +int vida
+        +int vida_restante
+        +int defensa
+        +int defensa_magica
+        +int ataque
+        +int ataque_magico
+        +int agilidad
+        +int magia
+        +int magia_restante
+        +int stamina
+        +int stamina_restante
+        +list objetos
+        +list habilidades
+        +list efectos_activos
+        +ataque_basico()
+        +subir_nivel()
+        +recibir_danio()
+        +ejecutar_habilidad()
+        +mostrar_estadisticas()
+    }
+    class Mago
+    class Berserker
+    class Strider
+    Personaje <|-- Mago
+    Personaje <|-- Berserker
+    Personaje <|-- Strider
+
+    class Habilidad {
+        +str nombre
+        +str tipo
+        +int potencia
+        +int costo_magia
+        +usar(atacante, defensor)
+    }
+    class BolaDeFuego
+    Habilidad <|-- BolaDeFuego
+
+    class Objeto {
+        +str nombre
+        +str descripcion
+        +int costo
+        +bool puede_usar(personaje_clase)
+        +usar(jugador)
+    }
+    class Pocion_menor
+    class Pocion_media
+    class Pocion_mayor
+    class Pocion_MAX
+    class Pocion_mana_menor
+    class Pocion_mana_media
+    class Pocion_mana_mayor
+    class Pocion_mana_MAX
+    Objeto <|-- Pocion_menor
+    Objeto <|-- Pocion_media
+    Objeto <|-- Pocion_mayor
+    Objeto <|-- Pocion_MAX
+    Objeto <|-- Pocion_mana_menor
+    Objeto <|-- Pocion_mana_media
+    Objeto <|-- Pocion_mana_mayor
+    Objeto <|-- Pocion_mana_MAX
+
+    class Efecto {
+        +str nombre
+        +int duracion
+        +aplicar(personaje)
+    }
+    class Quemado
+    Efecto <|-- Quemado
+
+    class DBManager {
+        +conectar()
+        +guardar_personaje(personaje)
+        +cargar_personaje(nombre)
+        +mostrar_personajes_creados()
+    }
+    class Batalla {
+        +pj_1
+        +pj_2
+        +turno
+        +comienzo()
+        +elegir_accion()
+    }
+    class Posada {
+        +personaje
+        +recepcion()
+        +descanso()
+        +entrar_tienda()
+        +salir_aventuras()
+    }
+    class Tienda {
+        +personaje
+        +entrar_tienda()
+        +comprar()
+        +vender()
+    }
+    class Cofre {
+        +generar_botin(personaje)
+    }
+
+    class PersonajeFactory {
+        +crear_personaje(nombre, clase)
+        +cargar_personaje(datos_db)
+    }
+    class HabilidadesFactory {
+        +cargar_habilidades(personaje, lista_habilidades)
+    }
+    class ObjetosFactory {
+        +cargar_inventario(personaje, lista_de_bd)
+    }
+
+    class MensajeroClases
+    class MensajeroVacio
+    class MensajeroGuerrero
+    class MensajeroMago
+    class MensajeroStrider
+    class MensajeroBatalla
+    MensajeroClases <|-- MensajeroVacio
+    MensajeroClases <|-- MensajeroGuerrero
+    MensajeroClases <|-- MensajeroMago
+    MensajeroClases <|-- MensajeroStrider
+
+    Personaje --> MensajeroClases : usa
+    Personaje o-- Habilidad : tiene >
+    Personaje o-- Objeto : tiene >
+    Personaje o-- Efecto : tiene >
+    Batalla --> Personaje : combate
+    Batalla --> MensajeroBatalla : usa
+    Posada --> Personaje : administra
+    Posada --> Tienda : crea
+    Tienda --> Personaje : sirve a
+    Cofre --> Personaje : genera botin para
+    DBManager --> Personaje : guarda/carga
+    PersonajeFactory --> Personaje : instancia
+    HabilidadesFactory --> Habilidad : instancia
+    ObjetosFactory --> Objeto : instancia
